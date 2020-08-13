@@ -1,0 +1,50 @@
+.box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+.box .header {
+    flex: 0 1 auto;
+}
+.box #mcmap {
+    flex: 1 1 auto;
+    position: relative;
+}
+.header {
+    background-color: #0f0f0f;
+    border-bottom: 4px solid #5e2627;
+    color: #e0e0e0;
+    font-family: 'Rubik', sans-serif;
+    font-size: 17px;
+}
+.header-part {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    margin: 0px 12px;
+}
+
+.header-part.server-social {
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: #8c94e6;
+}
+
+.header-part strong {
+    font-size: 20px;
+}
+
+.uv-logo-name {
+    font-size: 40px;
+}
+.uv-logo {
+    height: 60px;
+    border-left: 10px solid #191919;
+    border-right: 10px solid #191919;
+}
+
+.header-checkbox {
+    position: absolute;
+    bottom: 5px;
+    right: 30px;
+}

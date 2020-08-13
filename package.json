@@ -1,0 +1,36 @@
+{
+  "name": "uvdynmap",
+  "version": "1.0.0",
+  "description": "Dynmap extensions for UltraVanilla",
+  "scripts": {
+    "start": "node lib/app.js",
+    "test": "node lib/test.js",
+    "build-ts": "tsc --declaration",
+    "watch-ts": "tsc -w --declaration",
+    "grab-vendor-assets": "get-google-fonts -w -i 'https://fonts.googleapis.com/css?family=Rubik:400,500' -o vendor",
+    "build": "npm run build-ts && npm run grab-vendor-assets"
+  },
+  "author": "lordpipe",
+  "license": "(CC0-1.0 OR ISC)",
+  "dependencies": {
+    "@types/koa-mount": "^4.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "fetch": "^1.1.0",
+    "koa": "^2.13.0",
+    "koa-basic-auth": "^4.0.0",
+    "koa-mount": "^4.0.0",
+    "koa-proxies": "^0.11.0",
+    "koa-static": "^5.0.0",
+    "pkg-dir": "^4.2.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.21",
+    "@types/koa": "^2.11.3",
+    "@types/koa-proxy": "^1.0.1",
+    "@types/koa-static": "^4.0.1",
+    "@types/node-fetch": "^2.5.7",
+    "get-google-fonts": "^1.2.2",
+    "typescript": "^3.9.7"
+  }
+}
