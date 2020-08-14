@@ -30,6 +30,11 @@
     color: #8c94e6;
 }
 
+.header-part.server-social:hover, .header-part.server-social:active {
+    background-color: #9f9f9f;
+    color: #1c1c1c;
+}
+
 .header-part strong {
     font-size: 20px;
 }
