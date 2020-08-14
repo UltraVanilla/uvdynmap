@@ -22,13 +22,6 @@ const logger = winston.createLogger({
 
 const app = new Koa;
 
-// TODO: remove this
-app.use(require("koa-basic-auth")({
-    realm: "experimental ultravanilla thing, please enter password",
-    name: "doofus",
-    pass: "c41e3c629b83",
-}));
-
 app.use(mount("/assets", serve(pkgPath + "/assets")));
 app.use(mount("/assets", serve(pkgPath + "/vendor")));
 
