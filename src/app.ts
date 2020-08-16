@@ -64,7 +64,7 @@ app.use(async (ctx, next) => {
             .addClass("header-part server-social server-reddit")
             .appendTo(newHeader);
 
-        $("<a href='https://ultravanilla.wiki'>community wiki")
+        $("<a href='https://uv.miraheze.org/wiki/Main_Page'>community wiki")
             .addClass("header-part server-social server-wiki")
             .appendTo(newHeader);
 
