@@ -8,6 +8,8 @@ License
 
 This source code is dual-licensed under choice of CC0 or MIT. See `LICENSE` and `LICENSE-MIT`
 
+Includes modified source code from dynmap released under Apache v2 license - Copyright (c) 2020 Mikeprimm
+
 **Contributing**
 
 By making a contribution to this repository, I certify that:
