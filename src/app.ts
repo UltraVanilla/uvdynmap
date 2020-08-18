@@ -81,9 +81,15 @@ app.use(async (ctx, next) => {
 
         newContainer.appendTo($("body"));
 
-        $("<div><label for='header-checkbox'>Enable header? </label><input type='checkbox' id='header-checkbox' checked></div>")
-            .addClass("header-checkbox")
-            .appendTo($("body"));
+        $(`
+            <div class="tools-buttons">
+                <button class="tools-button tools-jump-to-old-spawn">Jump to Old Spawn</button>
+                <button class="tools-button tools-jump-to-new-spawn">Jump to New Spawn</button>
+                <div class="header-checkbox">
+                    <label for='header-checkbox'>Enable header? </label><input type='checkbox' id='header-checkbox' checked>
+                </div>
+            </div>
+        `).appendTo($("body"));
 
         $("<link>")
             .attr("href", "assets/fonts.css")
