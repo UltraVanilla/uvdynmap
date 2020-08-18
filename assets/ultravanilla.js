@@ -71,7 +71,7 @@ window.addEventListener("load", function() {
       const headerCheckbox = $(".header-checkbox");
       const crosshairCheckbox = $(".crosshair-checkbox");
 
-      if (localStorage.enableHeader != null) {
+      if (localStorage.enableHeader == null) {
         localStorage.enableHeader = true;
       }
 
