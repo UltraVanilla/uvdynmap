@@ -146,6 +146,16 @@ body {
     padding: 5px;
 }
 
+.copy-coordinates-window button {
+  width: 140px;
+  height: 32px;
+}
+
+.copy-coordinates-window input[type=text] {
+  width: 216px;
+  height: 32px;
+}
+
 @media screen and (min-device-width: 640px) {
     .dynmap .hitbar, .dynmap .sidebar {
         transition: all 0.3s;

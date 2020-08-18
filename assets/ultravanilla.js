@@ -201,7 +201,7 @@ window.addEventListener("load", function() {
       function getPanel() {
         if (panel != null) return panel;
         const contents = $(`
-          <div>
+          <div class="copy-coordinates-window">
             <table>
               <tr>
                 <td><label for="copy-coordinates0">Human</label></td>
@@ -248,7 +248,7 @@ window.addEventListener("load", function() {
           headerTitle: "Copy Coordinates",
           resizeit: false,
           position: "left-bottom",
-          contentSize: "410 260",
+          contentSize: "440 205",
           headerControls: {
             maximize: "remove"
           },
