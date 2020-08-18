@@ -331,6 +331,9 @@ window.addEventListener("load", function() {
         </form>
       `)
 
+      // avoid form submission to webserver
+      contents.submit(() => false);
+
       const inputStringCoordinates = contents.find(".input-coordinates");
       const inputFormat = contents.find(".input-coordinates-format");
 
