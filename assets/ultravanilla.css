@@ -54,8 +54,6 @@ body {
     font-size: 20px;
 }
 
-
-
 .uv-logo-name {
     font-size: 40px;
 }
@@ -63,6 +61,42 @@ body {
     height: 60px;
     border-left: 10px solid #191919;
     border-right: 10px solid #191919;
+}
+
+.dynmap .crosshair {
+    mix-blend-mode: difference;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    position: absolute;
+    background-color: #fff;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.dynmap .xcrosshair {
+    height: 1px;
+    width: 100%;
+}
+
+.dynmap .ycrosshair {
+    width: 1px;
+    height: 100%;
+}
+
+.dynmap .coord-control-center .coord-control-value {
+    color: #424fd5;
+    text-decoration: underline;
+    font-size: 15px;
+}
+
+.dynmap .coord-control-center {
+    cursor: pointer;
+}
+
+.dynmap .compass {
+    display: none;
 }
 
 .tools-buttons.sidebar-pinned {
@@ -106,6 +140,10 @@ body {
 
 .leaflet-popup-content {
     width: 610px !important;
+}
+
+.jsPanel .jsPanel-content {
+    padding: 5px;
 }
 
 @media screen and (min-device-width: 640px) {
