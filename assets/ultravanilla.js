@@ -332,7 +332,10 @@ window.addEventListener("load", function() {
       `)
 
       // avoid form submission to webserver
-      contents.submit(() => false);
+      contents.submit(event => {
+        event.preventDefault;
+        return false;
+      });
 
       const inputStringCoordinates = contents.find(".input-coordinates");
       const inputFormat = contents.find(".input-coordinates-format");
