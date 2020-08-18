@@ -7,7 +7,7 @@
     "test": "node lib/test.js",
     "build-ts": "tsc --declaration",
     "watch-ts": "tsc -w --declaration",
-    "grab-vendor-assets": "get-google-fonts -w -i 'https://fonts.googleapis.com/css?family=Rubik:400,500' -o vendor",
+    "grab-vendor-assets": "node build.js",
     "build": "npm run build-ts && npm run grab-vendor-assets",
     "install": "npm run build"
   },
