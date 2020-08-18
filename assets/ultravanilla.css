@@ -104,6 +104,10 @@ body {
     width: 610px !important;
 }
 
+.dynmap .hitbar, .dynmap .sidebar {
+    transition: all 0.3s;
+}
+
 @media screen and (max-height: 450px) {
     .header {
         display: none;
