@@ -22,6 +22,7 @@ const logger = winston.createLogger({
 
 const app = new Koa;
 
+app.use(serve(pkgPath + "/dynmap"));
 app.use(mount("/assets", serve(pkgPath + "/assets")));
 app.use(mount("/assets", serve(pkgPath + "/vendor")));
 
@@ -48,23 +49,28 @@ app.use(async (ctx, next) => {
             .addClass("header-part uv-logo")
             .appendTo(newHeader);
 
-        $("<div><strong>server address:</strong> play.ultravanilla.world</div>")
-            .addClass("header-part server-info")
+        $(`
+            <span class='header-info-container'>
+                <div class='header-part server-info'>
+                    <strong class='server-info-label'>server address: </strong> play.ultravanilla.world</div>
+                <div class='header-part server-info server-info-version'>
+                    <strong class='server-info-label'>version: </strong> 1.16.1</div>
+            </span>
+        `).appendTo(newHeader);
+
+        $("<span>")
+            .addClass("header-separator")
             .appendTo(newHeader);
 
-        $("<div><strong>version:</strong> 1.16.1</div>")
-            .addClass("header-part server-info")
-            .appendTo(newHeader);
-
-        $("<a href='https://discord.gg/kU4dkzk'>discord")
+        $("<a href='https://discord.gg/kU4dkzk' target='blank' rel='noreferrer'>discord</a>")
             .addClass("header-part server-social server-discord")
             .appendTo(newHeader);
 
-        $("<a href='https://www.reddit.com/r/UltraVanilla/'>reddit")
+        $("<a href='https://www.reddit.com/r/UltraVanilla/' target='blank' rel='noreferrer'>reddit</a>")
             .addClass("header-part server-social server-reddit")
             .appendTo(newHeader);
 
-        $("<a href='https://uv.miraheze.org/wiki/Main_Page'>community wiki")
+        $("<a href='https://uv.miraheze.org/wiki/Main_Page' target='blank' rel='noreferrer'>community wiki</a>")
             .addClass("header-part server-social server-wiki")
             .appendTo(newHeader);
 

@@ -1,3 +1,10 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 .box {
     display: flex;
     flex-flow: column;
@@ -17,6 +24,11 @@
     font-family: 'Rubik', sans-serif;
     font-size: 17px;
 }
+
+.header.header-disabled { 
+    display: none;
+}
+
 .header-part {
     display: inline-block;
     vertical-align: middle;
@@ -39,6 +51,8 @@
     font-size: 20px;
 }
 
+
+
 .uv-logo-name {
     font-size: 40px;
 }
@@ -52,4 +66,74 @@
     position: absolute;
     bottom: 5px;
     right: 30px;
+}
+
+.mw-parser-output {
+    max-height: 700px;
+    overflow-y: scroll;
+    width: 600px;
+}
+
+.leaflet-popup-content {
+    width: 610px !important;
+}
+
+@media screen and (max-height: 450px) {
+    .header {
+        display: none;
+    }
+}
+
+@media (max-width: 626px) {
+    .header-part .server-info-label {
+        display: none;
+    }
+    .header-part .server-info {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+@media (max-width: 845px) {
+    .header-part.uv-logo-name {
+        display: none;
+    }
+
+    .header-part.server-info-version {
+        display: none;
+    }
+    .header-part.uv-logo {
+        display: inline-block;
+    }
+
+    .header-info-container {
+        display: inline-block;
+    }
+    .header-part.server-social, .header-part.server-info {
+        width: 100%;
+        padding: 4px;
+    }
+    .header-part.server-social {
+        padding: 7px;
+        font-size: 19px;
+        border-bottom: 4px solid #4c4c4c;
+        margin: 0px;
+        text-align: center;
+    }
+    .header-part.server-social:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (min-width: 845px) and (max-width: 1261px) {
+    .header-separator {
+        display: block;
+    }
+    .header-part.server-social {
+        width: 33.333%;
+        margin: 0px;
+        padding: 10px;
+        border-left: 4px solid #0f0f0f;
+        border-right: 4px solid #0f0f0f;
+        text-align: center;
+    }
 }

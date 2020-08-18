@@ -15,9 +15,9 @@ window.addEventListener("load", function() {
 
   function update() {
     if (headerCheckbox.checked) {
-      header.style.display = "block";
+      header.classList.remove("header-disabled");
     } else {
-      header.style.display = "none";
+      header.classList.add("header-disabled");
     }
   }
 });
