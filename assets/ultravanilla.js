@@ -58,6 +58,6 @@ window.addEventListener("load", function() {
     pinnedObserver.observe($(".dynmap .sidebar")[0], { attributes: true });
 
     if (localStorage.pinSidebar === "true") $(".dynmap .sidebar").addClass("pinned");
-  }, 500);
+  }, 1000);
 });
 
