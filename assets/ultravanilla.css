@@ -65,6 +65,10 @@ body {
     border-right: 10px solid #191919;
 }
 
+.tools-buttons.sidebar-pinned {
+    right: 230px;
+}
+
 .tools-buttons {
     position: absolute;
     bottom: 5px;
@@ -104,8 +108,24 @@ body {
     width: 610px !important;
 }
 
-.dynmap .hitbar, .dynmap .sidebar {
-    transition: all 0.3s;
+@media screen and (min-device-width: 640px) {
+    .dynmap .hitbar, .dynmap .sidebar {
+        transition: all 0.3s;
+    }
+}
+
+.dynmap .sidebar .pin {
+    width: 100px !important;
+    background-repeat: no-repeat;
+}
+
+
+.dynmap .sidebar .pin::before {
+    content: "Pin this sidebar";
+    background-color: #1c1c1c;
+    color: #8c94e6;
+    text-decoration: underline;
+    margin-left: 17px;
 }
 
 @media screen and (max-height: 450px) {
@@ -114,7 +134,7 @@ body {
     }
 }
 
-@media (max-width: 626px) {
+@media screen and (max-width: 626px) {
     .header-part .server-info-label {
         display: none;
     }
@@ -123,7 +143,7 @@ body {
         font-weight: bold;
     }
 }
-@media (max-width: 845px) {
+@media screen and (max-width: 845px) {
     .header-part.uv-logo-name {
         display: none;
     }
@@ -154,7 +174,7 @@ body {
     }
 }
 
-@media (min-width: 845px) and (max-width: 1261px) {
+@media screen and (min-width: 845px) and (max-width: 1261px) {
     .header-separator {
         display: block;
     }
