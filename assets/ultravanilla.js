@@ -66,21 +66,23 @@ window.addEventListener("load", function() {
       <div class="ycrosshair crosshair"></div>
     `).appendTo($(".dynmap"));
 
-
     // set up toggle checkboxes
     {
       const headerCheckbox = $(".header-checkbox");
       const crosshairCheckbox = $(".crosshair-checkbox");
 
       if (localStorage.enableHeader != null) {
-        headerCheckbox.prop("checked", localStorage.enableHeader === 'true');
-        updateHeader();
+        localStorage.enableHeader = true;
       }
 
-      if (localStorage.enableCrosshair != null) {
-        crosshairCheckbox.prop("checked", localStorage.enableCrosshair === 'true');
-        updateCrosshair();
+      if (localStorage.enableCrosshair == null) {
+        localStorage.enableCrosshair = false;
       }
+      headerCheckbox.prop("checked", localStorage.enableHeader === 'true');
+      crosshairCheckbox.prop("checked", localStorage.enableCrosshair === 'true');
+
+      updateHeader();
+      updateCrosshair();
 
       headerCheckbox.change(() => {
         localStorage.enableHeader = headerCheckbox.prop("checked");
@@ -100,7 +102,6 @@ window.addEventListener("load", function() {
         }
       }
       function updateCrosshair() {
-        console.log("fun zone")
         if (crosshairCheckbox.prop("checked")) {
           $(".dynmap .crosshair").show();
         } else {
