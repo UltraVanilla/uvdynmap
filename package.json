@@ -25,12 +25,13 @@
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.21",
-    "@types/koa-mount": "^4.0.0",
     "@types/koa": "^2.11.3",
+    "@types/koa-mount": "^4.0.0",
     "@types/koa-proxy": "^1.0.1",
     "@types/koa-static": "^4.0.1",
     "@types/node-fetch": "^2.5.7",
     "get-google-fonts": "^1.2.2",
+    "jspanel4": "^4.11.0-beta",
     "typescript": "^3.9.7"
   }
 }
