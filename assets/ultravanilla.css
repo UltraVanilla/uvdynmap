@@ -17,11 +17,14 @@ html {
     flex: 1 1 auto;
     position: relative;
 }
+
+body {
+    font-family: 'Rubik', sans-serif;
+}
 .header {
     background-color: #0f0f0f;
     border-bottom: 4px solid #5e2627;
     color: #e0e0e0;
-    font-family: 'Rubik', sans-serif;
     font-size: 17px;
 }
 
@@ -62,10 +65,33 @@ html {
     border-right: 10px solid #191919;
 }
 
-.header-checkbox {
+.tools-buttons {
     position: absolute;
     bottom: 5px;
     right: 30px;
+    font-size: 19px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+}
+
+.tools-buttons > * {
+    margin: 10px 0px;
+}
+
+.tools-button {
+    color: #fff;
+    border: none;
+    display: block;
+    font-size: inherit;
+    padding: 5px 10px;
+
+    background-color: #1c1c1c;
+    color: #8c94e6;
+    text-decoration: underline;
+}
+.tools-button:active, .tools-button:hover {
+    background-color: #9f9f9f;
+    color: #1c1c1c;
 }
 
 .mw-parser-output {
