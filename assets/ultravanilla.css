@@ -132,6 +132,12 @@ body {
     color: #1c1c1c;
 }
 
+.element-toggle-preview {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #a0a0a0;
+}
+
 .mw-parser-output {
     max-height: 700px;
     overflow-y: scroll;

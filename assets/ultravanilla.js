@@ -108,6 +108,84 @@ window.addEventListener("load", function() {
           $(".dynmap .crosshair").hide();
         }
       }
+
+    }
+
+
+    // settings panel
+    {
+      let panel;
+
+      $(".tools-settings").hover(() => {
+        loadJsPanel();
+      }).click(async () => {
+        const jsPanel = await loadJsPanel();
+
+        if (panel != null) {
+          panel.normalize();
+          panel.front();
+          return;
+        }
+
+        const contents = $(`
+          <div>
+            <h3>Configure UI</h3>
+            <div class="settings-list-of-elements" />
+          </div>
+        `);
+
+        // generate a toggle checkbox for each thing that can be disabled
+        $("[data-toggle]").each((_, elem) => {
+          const name = $(elem).data("toggle");
+          let enabled = localStorage[`elementEnabled.${name}`] !== "false";
+
+          const checkbox = $(`
+            <div>
+              <input type="checkbox" id="element-toggle-checkbox-${name}" class="element-toggle-checkbox">
+              <label for="element-toggle-checkbox-${name}">Show this thing?</label>
+              <div class="element-toggle-preview" />
+            </div>
+          `);
+
+          // show a non-interactive copy of the element
+          const previewElem = $(elem)
+            .clone()
+            .show()
+            .css("float", "none")
+            .css("position", "static")
+            .css("pointerEvents", "none")
+            .removeAttr("data-toggle");
+
+          previewElem.find("*").unbind("click");
+
+          checkbox.find(".element-toggle-preview").append(previewElem);
+
+          const checkboxInput = checkbox.find("input");
+          checkboxInput.prop("checked", enabled);
+
+          checkboxInput.change(() => {
+            enabled = checkboxInput.prop("checked");
+            localStorage[`elementEnabled.${name}`] = enabled;
+            if (enabled) {
+              $(elem).show();
+            } else {
+              $(elem).hide();
+            }
+          });
+
+          contents.find(".settings-list-of-elements").append(checkbox);
+        });
+
+        panel = jsPanel.create({
+          content: contents[0],
+          headerTitle: "Settings",
+          position: "center",
+          panelSize: "340 100%",
+          onclosed() {
+            panel = undefined;
+          }
+        });
+      });
     }
 
     function getCenterCoords() {
@@ -119,14 +197,16 @@ window.addEventListener("load", function() {
     // display crosshair location and distance from mouse, and logic for copying coordinates
     {
       $(".coord-control-label").text("Mouse Location:");
+      $(".coord-control").attr("data-toggle", "mouse-location");
+
       const centerCoords = $(`
-        <div class="coord-control coord-control-center leaflet-control">
+        <div class="coord-control coord-control-center leaflet-control" data-toggle="center-coords">
           <span class="coord-control-label">Crosshair Location: </span><br><span class="coord-control-value">---,---,---</span>
           <div>Click to copy to clipboard</div>
         </div>
       `);
       const distanceIndicator = $(`
-        <div class="coord-control leaflet-control">
+        <div class="coord-control leaflet-control" data-toggle="distance-indicator">
           <span class="coord-control-label">Distance: </span><br><span class="coord-control-value">---</span>
         </div>
       `);
@@ -325,7 +405,7 @@ window.addEventListener("load", function() {
             <input type="number" id="input-coordinates-z" class="input-coordinates-z"></div>
           </div>
           <div>
-            <input type="submit"class="input-coordinates-go" value="Goto Location"/>
+            <input type="submit" class="input-coordinates-go" value="Goto Location"/>
             <input type="submit" class="input-coordinates-ok" value="Goto Location and Dismiss"/>
           </div>
         </form>
@@ -333,7 +413,7 @@ window.addEventListener("load", function() {
 
       // avoid form submission to webserver
       contents.submit(event => {
-        event.preventDefault;
+        event.preventDefault();
         return false;
       });
 
@@ -347,7 +427,6 @@ window.addEventListener("load", function() {
 
       // default to currently selected world
       inputWorld.val(dynmap.world.name);
-      console.log(dynmap.world.name)
 
       // grab format preference from localStorage
       if (localStorage.formatPreference != null) {
@@ -431,5 +510,23 @@ window.addEventListener("load", function() {
 
       if (localStorage.pinSidebar === "true") $(".dynmap .sidebar").addClass("pinned");
     }
+  }
+
+  {
+    const pageObserver = new MutationObserver(mutationsList => {
+
+      Object.entries(localStorage).forEach(([key, value]) => {
+        const crumbs = key.split(".");
+        if (crumbs[0] === "elementEnabled") {
+          const name = crumbs[1];
+
+          if (value === "false") {
+            $(`[data-toggle='${name}']`).hide();
+          }
+        };
+      });
+    })
+
+    pageObserver.observe($("body")[0], { subtree: true, childList: true });
   }
 });
