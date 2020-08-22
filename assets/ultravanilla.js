@@ -268,11 +268,11 @@ window.addEventListener("load", function() {
       if (dynmap.world.name === "world_nether") {
         coords.world = dynmap.worlds.world;
         coords.x *= 8;
-        coords.y *= 8;
+        coords.z *= 8;
       } else {
         coords.world = dynmap.worlds.world_nether;
         coords.x /= 8;
-        coords.y /= 8;
+        coords.z /= 8;
       }
 
       dynmap.panToLocation(coords);
