@@ -138,10 +138,6 @@ body {
     width: 600px;
 }
 
-.leaflet-popup-content {
-    width: 610px !important;
-}
-
 .jsPanel .jsPanel-content {
     padding: 5px;
 }
