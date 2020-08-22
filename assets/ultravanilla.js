@@ -180,7 +180,7 @@ window.addEventListener("load", function() {
           content: contents[0],
           headerTitle: "Settings",
           position: "center",
-          panelSize: "340 100%",
+          panelSize: "340 95%",
           onclosed() {
             panel = undefined;
           }
