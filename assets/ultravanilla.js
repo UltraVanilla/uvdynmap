@@ -386,7 +386,7 @@ window.addEventListener("load", function() {
           <div>
             <label for="input-coordinates-format">Format: </label>
             <select id="input-coordinates-format" class="input-coordinates-format">
-              <option value="xyz" selected>XYZ</option>
+              <option value="xyz" selected>XYZ (Press F3+C ingame)</option>
               <option value="xzy">XZ (VoxelMap)</option>
             </select>
             <div>
@@ -399,9 +399,9 @@ window.addEventListener("load", function() {
             </div>
           </div>
           <div>
-            <div><label for="input-coordinates-x">X:</label>
+            <div><label for="input-coordinates-x" step="any">X:</label>
             <input type="number" id="input-coordinates-x" class="input-coordinates-x"></div>
-            <div><label for="input-coordinates-z">Z:</label>
+            <div><label for="input-coordinates-z" step="any">Z:</label>
             <input type="number" id="input-coordinates-z" class="input-coordinates-z"></div>
           </div>
           <div>
