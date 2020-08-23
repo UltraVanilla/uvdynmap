@@ -368,7 +368,7 @@ window.addEventListener("load", function() {
     $(".tools-jump-to-new-spawn").click(() => {
       dynmap.panToLocation({
         world: dynmap.worlds.world,
-        x: -2002400, y: 64, z: -1995513
+        x: -2002407, y: 64, z: -1995441
       });
     });
 
