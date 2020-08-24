@@ -463,12 +463,14 @@ window.addEventListener("load", function() {
       const coords = { world: dynmap.world, x: 0, y: 64, z: 0 };
 
       contents.find(".input-coordinates-go").click(() => {
+        coords.world = dynmap.worlds[inputWorld.val()];
         coords.x = parseFloat(inputX.val());
         coords.z = parseFloat(inputZ.val());
         dynmap.panToLocation(coords);
       });
 
       contents.find(".input-coordinates-ok").click(() => {
+        coords.world = dynmap.worlds[inputWorld.val()];
         coords.x = parseFloat(inputX.val());
         coords.z = parseFloat(inputZ.val());
         dynmap.panToLocation(coords);
