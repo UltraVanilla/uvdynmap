@@ -399,10 +399,10 @@ window.addEventListener("load", function() {
             </div>
           </div>
           <div>
-            <div><label for="input-coordinates-x" step="any">X:</label>
-            <input type="number" id="input-coordinates-x" class="input-coordinates-x"></div>
-            <div><label for="input-coordinates-z" step="any">Z:</label>
-            <input type="number" id="input-coordinates-z" class="input-coordinates-z"></div>
+            <div><label for="input-coordinates-x">X:</label>
+            <input type="number" id="input-coordinates-x" class="input-coordinates-x" step="any"></div>
+            <div><label for="input-coordinates-z">Z:</label>
+            <input type="number" id="input-coordinates-z" class="input-coordinates-z" step="any"></div>
           </div>
           <div>
             <input type="submit" class="input-coordinates-go" value="Goto Location"/>
