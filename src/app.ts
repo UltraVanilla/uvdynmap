@@ -30,11 +30,14 @@ app.use(async (ctx, next) => {
     if (ctx.path === "/") {
         let body;
         let loaded = false;
+        let error;
         try {
             const res = await fetch(process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/");
             body = await res.text();
             loaded = true;
         } catch (err) {
+            // fallback page
+            error = err;
             body = `
                 <!doctype html>
                 <html>
@@ -64,12 +67,10 @@ app.use(async (ctx, next) => {
                         .dynmap-broke {
                             background-color: rgba(255, 255, 255, 0.5);
                             padding: 20px;
-                            margin: 10px 5%;
+                            margin: 30px;
                             font-size: 20px;
-                            text-align: center;
                         }
                         </style>
-
                     </body>
                 <html>
             `;
@@ -143,9 +144,18 @@ app.use(async (ctx, next) => {
                 .attr("src", "assets/ultravanilla.js")
                 .appendTo($("head"));
         } else {
-            $("<span>Dynmap broke lol</span>")
-                .addClass("dynmap-broke")
-                .appendTo(newContainer);
+            const err = $(`
+                <div class="dynmap-broke">
+                    <h3>Dynmap broke lol</h3>
+                    <pre class="error-msg"></pre>
+                </div>
+            `)
+                .appendTo(newContainer)
+                .find(".error-msg").text(error.stack);
+
+            // err.find(".error-msg").text(error.stack);
+
+            // err.appendTo(newContainer);
         }
         newContainer.appendTo($("body"));
 
