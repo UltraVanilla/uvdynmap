@@ -47,6 +47,5 @@ process.on("unhandledRejection", function (err) {
     })())
   ]);
 
-  await Promise.all(waitingFor);
   console.log("Finished preparing vendor assets")
 })();
