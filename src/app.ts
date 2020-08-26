@@ -99,7 +99,7 @@ app.use(async (ctx, next) => {
                 <div class='header-part server-info'>
                     <strong class='server-info-label'>server address: </strong> play.ultravanilla.world</div>
                 <div class='header-part server-info server-info-version'>
-                    <strong class='server-info-label'>version: </strong> 1.16.1</div>
+                    <strong class='server-info-label'>version: </strong> 1.16.2</div>
             </span>
         `).appendTo(newHeader);
 
@@ -152,10 +152,6 @@ app.use(async (ctx, next) => {
             `)
                 .appendTo(newContainer)
                 .find(".error-msg").text(error.stack);
-
-            // err.find(".error-msg").text(error.stack);
-
-            // err.appendTo(newContainer);
         }
         newContainer.appendTo($("body"));
 
