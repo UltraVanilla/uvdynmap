@@ -1,31 +1,52 @@
 const GetGoogleFonts = require("get-google-fonts");
-const fs = require("fs").promises;
+const fs = require("fs");
 const path = require("path");
+const util = require("util");
+const streamPipeline = util.promisify(require("stream").pipeline);
+const fetch = require("node-fetch");
 
-let waitingFor = [];
+process.on("unhandledRejection", function (err) {
+  console.error(err)
+  process.exit(1)
+});
 
-fs.stat("vendor").catch(() => {
-  return fs.mkdir("vendor");
-}).then(() => {
+(async () => {
+  try {
+    await fs.promises.stat("vendor");
+  } catch (err) {
+    await fs.promises.mkdir("vendor");
+  }
+
   const ggf = new GetGoogleFonts({
     outputDir: './vendor/',
     verbose: true
   });
 
-  waitingFor.push(ggf.download([
-    {
-      Rubik: [400, 500]
-    }
-  ]));
+  await Promise.all([
+    // download google fonts
+    ggf.download([
+      {
+        Rubik: [400, 500]
+      }
+    ]),
 
-  waitingFor = [ ...waitingFor, [
-    "node_modules/jspanel4/dist/jspanel.min.js",
-    "node_modules/jspanel4/dist/jspanel.min.css",
-  ].map(file => fs.copyFile(file, path.join("vendor", path.basename(file))))];
+    // copy jspanel to `vendor`
+    ...[
+      "node_modules/jspanel4/dist/jspanel.min.js",
+      "node_modules/jspanel4/dist/jspanel.min.css",
+    ].map(file => fs.promises.copyFile(file, path.join("vendor", path.basename(file)))),
 
-  return Promise.all(waitingFor)
-}).then(() => {
+    // get windows XP wallpaper
+    ((async () => {
+      const res = await fetch("https://i.imgur.com/uGRFZEs.jpg");
+      if (res.ok) {
+        return streamPipeline(res.body, fs.createWriteStream('./vendor/windows-xp.jpg'));
+      } else {
+        throw new Error(`Could not download assets: ${res.statusText}`);
+      }
+    })())
+  ]);
+
+  await Promise.all(waitingFor);
   console.log("Finished preparing vendor assets")
-}).catch(() => {
-  throw err;
-});
+})();
