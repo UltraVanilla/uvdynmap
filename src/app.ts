@@ -32,7 +32,9 @@ app.use(async (ctx, next) => {
         let loaded = false;
         let error;
         try {
-            const res = await fetch(process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/");
+            const res = await fetch(process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/", {
+                timeout: 7500
+            });
             body = await res.text();
             loaded = true;
         } catch (err) {
