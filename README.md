@@ -12,7 +12,7 @@ Building
 
 `npm run build-ts` - Compile typescript
 
-`npm run bundle` - Compile clientside javascript (must)
+`npm run bundle` - Compile clientside javascript (must do `build-ts` first)
 
 `npm run grab-vendor-assets` - Download fonts
 
