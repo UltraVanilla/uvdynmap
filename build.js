@@ -31,10 +31,7 @@ process.on("unhandledRejection", function (err) {
     ]),
 
     // copy jspanel to `vendor`
-    ...[
-      "node_modules/jspanel4/dist/jspanel.min.js",
-      "node_modules/jspanel4/dist/jspanel.min.css",
-    ].map(file => fs.promises.copyFile(file, path.join("vendor", path.basename(file)))),
+    fs.promises.copyFile("node_modules/jspanel4/dist/jspanel.min.css", "vendor/jspanel.min.css"),
 
     // get windows XP wallpaper
     ((async () => {
