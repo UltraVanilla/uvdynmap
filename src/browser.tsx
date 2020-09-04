@@ -57,6 +57,7 @@ window.addEventListener("load", function () {
 
         const header = document.getElementsByClassName("header")[0];
 
+
         // inject crosshairs
         $(<>
             <div className="xcrosshair crosshair"></div>
@@ -240,13 +241,62 @@ window.addEventListener("load", function () {
             });
         }
 
+        let coords = { x: 0, y: 64, z: 0, world: dynmap.world };
+
         function getCenterCoords() {
-            return dynmap.maptype
+            coords = dynmap.maptype
                 .getProjection()
                 .fromLatLngToLocation(map.getBounds().getCenter(), 64);
+
+            coords.x = Math.round(coords.x);
+            coords.z = Math.round(coords.z);
+            coords.world = dynmap.world;
+
+            return coords;
         }
 
-        let coords = getCenterCoords();
+        getCenterCoords();
+
+        // handle coordinates in URL hash
+        {
+            let avoidUpdating = false;
+
+            map.on("moveend", () => {
+                const coords = getCenterCoords();
+
+                const newHash = [map._zoom, coords.x.toString(), coords.z.toString()];
+                console.log(coords);
+                if (coords.world.name !== "world") newHash.push(coords.world.name);
+                // do not allow the readUrlCoords handler to go off
+                avoidUpdating = true;
+                location.hash = "Z" + newHash.join(",");
+            });
+
+            window.addEventListener("hashchange", readUrlCoords);
+            readUrlCoords();
+            function readUrlCoords() {
+                if (avoidUpdating) {
+                    avoidUpdating = false;
+                    return;
+                }
+                const parts = location.hash.slice(2).split(",");
+                let zoom = parseFloat(parts[0]);
+                let x = parseFloat(parts[1]);
+                let z = parseFloat(parts[2]);
+
+                if (isNaN(zoom) || isNaN(x) || isNaN(z)) return;
+
+                let world = parts[3];
+
+                if (world !== "world_nether" && world !== "world_the_end") world = "world";
+
+                dynmap.panToLocation({
+                    world: dynmap.worlds[world], x, z, y: 64
+                });
+                map.setZoom(zoom);
+            }
+
+        }
 
         // display crosshair location and distance from mouse, and logic for copying coordinates
         {
@@ -276,10 +326,7 @@ window.addEventListener("load", function () {
             const centerCoordsValue = centerCoords.find(".coord-control-value");
 
             function updateCoords() {
-                coords = getCenterCoords();
-                coords.x = Math.round(coords.x);
-                coords.z = Math.round(coords.z);
-
+                const coords = getCenterCoords();
 
                 centerCoordsValue.text(`${coords.x},${coords.y},${coords.z}`);
 
@@ -316,7 +363,7 @@ window.addEventListener("load", function () {
 
                 $(panel.content)
                     .find(`#copy-coordinates0`)
-                    .val(`${coords.x}, ${coords.z} in ${coords.world}`);
+                    .val(`${coords.x}, ${coords.z} in ${coords.world.name}`);
 
                 $(panel.content)
                     .find(`#copy-coordinates1`)
@@ -333,6 +380,10 @@ window.addEventListener("load", function () {
                 $(panel.content)
                     .find(`#copy-coordinates4`)
                     .val(`${coords.x},${coords.y},${coords.z}`);
+
+                $(panel.content)
+                    .find(`#copy-coordinates5`)
+                    .val(location.toString());
 
                 // automatically copy to clipboard
                 $(panel.content)
@@ -374,6 +425,11 @@ window.addEventListener("load", function () {
                                 <td><input type="text" id="copy-coordinates4" className="copy-coordinates"/></td>
                                 <td><button data-option="4">Set as default</button></td>
                             </tr>
+                            <tr>
+                                <td><label htmlFor="copy-coordinates5">URL</label></td>
+                                <td><input type="text" id="copy-coordinates5" className="copy-coordinates"/></td>
+                                <td><button data-option="5">Set as default</button></td>
+                            </tr>
                         </table>
                     </div>
                 );
@@ -387,14 +443,10 @@ window.addEventListener("load", function () {
                     .show()
                     .click((evt) => {
                         contents.find("button").show();
-                        const copyPreference = $(evt.currentTarget).attr(
-                            "data-option"
-                        );
+                        const copyPreference = $(evt.currentTarget).attr("data-option");
                         localStorage.copyPreference = copyPreference;
                         contents
-                            .find(
-                                `button[data-option=${localStorage.copyPreference}]`
-                            )
+                            .find(`button[data-option=${localStorage.copyPreference}]`)
                             .hide();
                     });
                 contents
@@ -406,7 +458,7 @@ window.addEventListener("load", function () {
                     headerTitle: "Copy Coordinates",
                     resizeit: false,
                     position: "left-bottom",
-                    contentSize: "440 205",
+                    contentSize: "445 245",
                     headerControls: {
                         maximize: "remove",
                     },

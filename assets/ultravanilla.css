@@ -63,6 +63,10 @@ body {
     border-right: 10px solid #191919;
 }
 
+.dynmap .dynmap-link {
+    display: none;
+}
+
 .dynmap .crosshair {
     mix-blend-mode: difference;
     left: 50%;
