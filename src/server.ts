@@ -163,6 +163,11 @@ app.use(async (ctx, next) => {
             .appendTo($("head"));
 
         $("<link>")
+            .attr("href", "assets/jspanel.min.css")
+            .attr("rel", "stylesheet")
+            .appendTo($("head"));
+
+        $("<link>")
             .attr("href", "assets/fonts.css")
             .attr("rel", "stylesheet")
             .appendTo($("head"));
