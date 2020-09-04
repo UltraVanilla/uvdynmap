@@ -3,17 +3,20 @@
   "version": "1.0.0",
   "description": "Dynmap extensions for UltraVanilla",
   "scripts": {
-    "start": "node lib/app.js",
+    "start": "node lib/server.js",
     "test": "node lib/test.js",
     "build-ts": "tsc --declaration",
     "watch-ts": "tsc -w --declaration",
+    "bundle": "browserify lib/browser.js -o assets/ultravanilla.js",
+    "watch-bundle": "watchify lib/browser.js -o assets/ultravanilla.js --verbose --debug",
     "grab-vendor-assets": "node build.js",
-    "build": "npm run build-ts && npm run grab-vendor-assets",
+    "build": "npm run build-ts && npm run bundle && npm run grab-vendor-assets",
     "install": "npm run build"
   },
   "author": "lordpipe",
   "license": "(CC0-1.0 OR ISC)",
   "dependencies": {
+    "@types/jquery": "^3.5.1",
     "cheerio": "^1.0.0-rc.3",
     "koa": "^2.13.0",
     "koa-mount": "^4.0.0",
@@ -30,8 +33,12 @@
     "@types/koa-proxy": "^1.0.1",
     "@types/koa-static": "^4.0.1",
     "@types/node-fetch": "^2.5.7",
+    "browserify": "^16.5.2",
     "get-google-fonts": "^1.2.2",
     "jspanel4": "^4.11.0-beta",
-    "typescript": "^3.9.7"
+    "jsx-dom": "^6.4.19",
+    "typed-html": "^2.0.0",
+    "typescript": "^3.9.7",
+    "watchify": "^3.11.1"
   }
 }
