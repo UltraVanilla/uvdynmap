@@ -1,7 +1,30 @@
 UltraVanilla dynmap proxy
 ===
 
-A simple webserver to proxy connections to a Minecraft dynmap page and inject a header
+A simple webserver to proxy connections to a Minecraft dynmap page, inject a header and implement various tools.
+
+Building
+---
+
+`npm install` - **Install dependencies and compile everything**
+
+`npm run build` - Compile typescript
+
+`npm run build-ts` - Compile typescript
+
+`npm run bundle` - Compile clientside javascript (must)
+
+`npm run grab-vendor-assets` - Download fonts
+
+---
+
+`npm run watch-ts` - Automatically compile typescript as you edit
+
+`npm run watch-bundle` - Automatically bundle every time you compile typescript
+
+---
+
+`npm run start` - **Run webserver on $PORT**
 
 License
 ---
