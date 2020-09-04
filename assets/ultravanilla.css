@@ -99,6 +99,16 @@ body {
     display: none;
 }
 
+.link {
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+
+    background-color: rgba(28, 28, 28, 0.12);
+    color: #545fd9;
+    text-decoration: underline;
+}
+
 .tools-buttons.sidebar-pinned {
     right: 230px;
 }
@@ -170,7 +180,6 @@ body {
     background-repeat: no-repeat;
 }
 
-
 .dynmap .sidebar .pin::before {
     content: "Pin this sidebar";
     background-color: #1c1c1c;
@@ -225,7 +234,13 @@ body {
     }
 }
 
-@media screen and (min-width: 845px) and (max-width: 1261px) {
+@media screen and (max-width: 1440px) {
+    .server-open-source {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 845px) and (max-width: 1280px) {
     .header-separator {
         display: block;
     }

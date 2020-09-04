@@ -121,6 +121,10 @@ app.use(async (ctx, next) => {
             .addClass("header-part server-social server-wiki")
             .appendTo(newHeader);
 
+        $("<a href='#'>open source</a>")
+            .addClass("header-part server-social server-open-source")
+            .appendTo(newHeader);
+
         newContainer.append(newHeader);
 
         // move the dynmap container element inside our container
