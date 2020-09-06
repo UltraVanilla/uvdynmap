@@ -190,8 +190,8 @@ window.addEventListener("load", function () {
 
                     const checkbox = $(
                         <div>
-                            <input type="checkbox" id="element-toggle-checkbox-${name}" className="element-toggle-checkbox" />
-                            <label htmlFor="element-toggle-checkbox-${name}">Show this thing?</label>
+                            <input type="checkbox" id={`element-toggle-checkbox-${name}`} className="element-toggle-checkbox" />
+                            <label htmlFor={`element-toggle-checkbox-${name}`}>Show this thing?</label>
                             <div className="element-toggle-preview" />
                         </div>
                     );
@@ -265,7 +265,6 @@ window.addEventListener("load", function () {
                 const coords = getCenterCoords();
 
                 const newHash = [map._zoom, coords.x.toString(), coords.z.toString()];
-                console.log(coords);
                 if (coords.world.name !== "world") newHash.push(coords.world.name);
                 // do not allow the readUrlCoords handler to go off
                 avoidUpdating = true;
@@ -514,8 +513,8 @@ window.addEventListener("load", function () {
                         <input type="text" id="input-coordinates" className="input-coordinates"/>
                     </div>
                     <div>
-                        <label htmlFor="input-coordinates-htmlFormat">htmlFormat: </label>
-                        <select id="input-coordinates-htmlFormat" className="input-coordinates-htmlFormat">
+                        <label htmlFor="input-coordinates-format">htmlFormat: </label>
+                        <select id="input-coordinates-format" className="input-coordinates-format">
                             <option value="xyz" selected>XYZ (Press F3+C ingame)</option>
                             <option value="xzy">XZ (VoxelMap)</option>
                         </select>
@@ -592,20 +591,22 @@ window.addEventListener("load", function () {
                 if (str.includes("overworld")) inputWorld.val("world");
             });
 
-            const coords = { world: dynmap.world, x: 0, y: 64, z: 0 };
-
             contents.find(".input-coordinates-go").click(() => {
-                coords.world = dynmap.worlds[inputWorld.val() as string];
-                coords.x = parseFloat(inputX.val() as string);
-                coords.z = parseFloat(inputZ.val() as string);
-                dynmap.panToLocation(coords);
+                dynmap.panToLocation({
+                    world: dynmap.worlds[inputWorld.val() as string],
+                    x: parseFloat(inputX.val() as string),
+                    z: parseFloat(inputZ.val() as string),
+                    y: 64,
+                });
             });
 
             contents.find(".input-coordinates-ok").click(() => {
-                coords.world = dynmap.worlds[inputWorld.val() as string];
-                coords.x = parseFloat(inputX.val() as string);
-                coords.z = parseFloat(inputZ.val() as string);
-                dynmap.panToLocation(coords);
+                dynmap.panToLocation({
+                    world: dynmap.worlds[inputWorld.val() as string],
+                    x: parseFloat(inputX.val() as string),
+                    z: parseFloat(inputZ.val() as string),
+                    y: 64,
+                });
                 panel.close();
             });
 
