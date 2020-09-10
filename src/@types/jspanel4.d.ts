@@ -30,7 +30,7 @@ declare module "jspanel4/dist/jspanel" {
     export const pointerdown: string[];
     export const pointerup: string[];
     export const pointermove: string[];
-    export const ziBase: number;
+    export let ziBase: number;
 
     export interface JsPanel extends HTMLDivElement {
         addControl(config: CustomHeaderControl): JsPanel;

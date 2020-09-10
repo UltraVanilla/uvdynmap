@@ -118,7 +118,7 @@ body {
 }
 
 .tools-buttons {
-    z-index: 99999;
+    z-index: 500;
     position: absolute;
     bottom: 5px;
     right: 30px;

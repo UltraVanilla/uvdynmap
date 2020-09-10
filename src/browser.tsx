@@ -54,6 +54,8 @@ window.addEventListener("load", function () {
 
     async function loadUltraVanilla() {
         jsPanel.defaults.theme = "dark";
+        jsPanel.ziBase = 1000;
+
 
         const header = document.getElementsByClassName("header")[0];
 
