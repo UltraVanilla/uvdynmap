@@ -3,6 +3,20 @@ UltraVanilla dynmap proxy
 
 A simple webserver to proxy connections to a Minecraft dynmap page, inject a header and implement various tools.
 
+Features:
+
+- Go to coordinates, paste in output of F3+C
+- Copy coordinates in different formats
+- Header with server-related links, server address, version
+- Jump to spawn
+- Shorter URL format that doesn't conflict with formatting codes when pasted into chat
+- Go through nether portal (divides coordinates by 8 and vice versa)
+- Crosshair showing coordinates at center of screen
+- Distance measurement tool
+- Configurable UI, hide things you don'tneed
+
+Live demo: https://ultravanilla.world/
+
 Building
 ---
 
