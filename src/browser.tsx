@@ -513,7 +513,7 @@ window.addEventListener("load", function () {
                         <input type="text" id="input-coordinates" className="input-coordinates"/>
                     </div>
                     <div>
-                        <label htmlFor="input-coordinates-format">htmlFormat: </label>
+                        <label htmlFor="input-coordinates-format">Format: </label>
                         <select id="input-coordinates-format" className="input-coordinates-format">
                             <option value="xyz" selected>XYZ (Press F3+C ingame)</option>
                             <option value="xzy">XZ (VoxelMap)</option>
