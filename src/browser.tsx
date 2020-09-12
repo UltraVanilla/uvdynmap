@@ -243,6 +243,10 @@ window.addEventListener("load", function () {
             });
         }
 
+        dynmap.worlds.world.humanName = "overworld";
+        dynmap.worlds.world_the_end.humanName = "the end";
+        dynmap.worlds.world_nether.humanName = "nether";
+
         let coords = { x: 0, y: 64, z: 0, world: dynmap.world };
 
         function getCenterCoords() {
@@ -330,13 +334,6 @@ window.addEventListener("load", function () {
                 const coords = getCenterCoords();
 
                 centerCoordsValue.text(`${coords.x},${coords.y},${coords.z}`);
-
-                // attempt to guess the world from the string
-                if (dynmap.world.name === "world") coords.world = "overworld";
-                if (dynmap.world.name === "world_the_end")
-                    coords.world = "the end";
-                if (dynmap.world.name === "world_nether")
-                    coords.world = "the nether";
             }
 
             updateCoords();
@@ -364,7 +361,7 @@ window.addEventListener("load", function () {
 
                 $(panel.content)
                     .find(`#copy-coordinates0`)
-                    .val(`${coords.x}, ${coords.z} in ${coords.world.name}`);
+                    .val(`${coords.x}, ${coords.z} in ${coords.world.humanName}`);
 
                 $(panel.content)
                     .find(`#copy-coordinates1`)
