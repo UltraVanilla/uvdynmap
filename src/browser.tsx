@@ -369,7 +369,7 @@ window.addEventListener("load", function () {
 
                 $(panel.content)
                     .find(`#copy-coordinates2`)
-                    .val(`/tp ${coords.x} ${coords.y} ${coords.z}`);
+                    .val(`/co tp ${coords.world.name} ${coords.x} ${coords.y} ${coords.z}`);
 
                 $(panel.content)
                     .find(`#copy-coordinates3`)
