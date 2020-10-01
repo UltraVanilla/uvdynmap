@@ -32,9 +32,7 @@ window.addEventListener("load", function () {
             }
         },
         logo: document.getElementsByClassName("uv-logo")[0],
-        originalSrc:
-            document.getElementsByClassName("uv-logo")[0].getAttribute("src") ||
-            "",
+        originalSrc: document.getElementsByClassName("uv-logo")[0].getAttribute("src") || "",
     };
 
     loadAnimationController.load("firstupdate");
@@ -56,15 +54,15 @@ window.addEventListener("load", function () {
         jsPanel.defaults.theme = "dark";
         jsPanel.ziBase = 1000;
 
-
         const header = document.getElementsByClassName("header")[0];
 
-
         // inject crosshairs
-        $(<>
-            <div className="xcrosshair crosshair"></div>
-            <div className="ycrosshair crosshair"></div>
-        </>).appendTo($(".dynmap"));
+        $(
+            <>
+                <div className="xcrosshair crosshair"></div>
+                <div className="ycrosshair crosshair"></div>
+            </>,
+        ).appendTo($(".dynmap"));
 
         // set up toggle checkboxes
         {
@@ -78,14 +76,8 @@ window.addEventListener("load", function () {
             if (localStorage.enableCrosshair == null) {
                 localStorage.enableCrosshair = false;
             }
-            headerCheckbox.prop(
-                "checked",
-                localStorage.enableHeader === "true"
-            );
-            crosshairCheckbox.prop(
-                "checked",
-                localStorage.enableCrosshair === "true"
-            );
+            headerCheckbox.prop("checked", localStorage.enableHeader === "true");
+            crosshairCheckbox.prop("checked", localStorage.enableCrosshair === "true");
 
             updateHeader();
             updateCrosshair();
@@ -96,9 +88,7 @@ window.addEventListener("load", function () {
             });
 
             crosshairCheckbox.change(() => {
-                localStorage.enableCrosshair = crosshairCheckbox.prop(
-                    "checked"
-                );
+                localStorage.enableCrosshair = crosshairCheckbox.prop("checked");
                 updateCrosshair();
             });
 
@@ -131,30 +121,48 @@ window.addEventListener("load", function () {
                         panelSize: "560 150",
                     });
                     return;
-                } 
+                }
 
                 const contents = $(
                     <div>
-                    <p>UltraVanilla extensions for Dynmap made by lordpipe released into public domain</p>
-                        <a className="link" href="https://github.com/lordofpipes/uvdynmap"
-                    target="blank" rel="noreferrer">uvdynmap on GitHub</a>
+                        <p>UltraVanilla extensions for Dynmap made by lordpipe released into public domain</p>
+                        <a
+                            className="link"
+                            href="https://github.com/lordofpipes/uvdynmap"
+                            target="blank"
+                            rel="noreferrer"
+                        >
+                            uvdynmap on GitHub
+                        </a>
 
-                    <p>Dynmap by Mikeprimm</p>
-                    <a className="link" href="https://github.com/webbukkit/dynmap"
-                    target="blank" rel="noreferrer">dynmap on GitHub</a>
+                        <p>Dynmap by Mikeprimm</p>
+                        <a className="link" href="https://github.com/webbukkit/dynmap" target="blank" rel="noreferrer">
+                            dynmap on GitHub
+                        </a>
 
-                    <p>Other open source dependencies</p>
-                    <a className="link" href="https://paste.rs/bRI"
-                    target="blank" rel="noreferrer">3rd Party Licenses</a>
+                        <p>Other open source dependencies</p>
+                        <a className="link" href="https://paste.rs/bRI" target="blank" rel="noreferrer">
+                            3rd Party Licenses
+                        </a>
 
-                    <h4>Server Plugins</h4>
+                        <h4>Server Plugins</h4>
 
-                    <p>UltraVanilla plugin by Akoot_</p>
-                    <a className="link" href="https://github.com/Akoot/UltraVanilla"
-                    target="blank" rel="noreferrer">UltraVanilla on GitHub</a>
+                        <p>UltraVanilla plugin by Akoot_</p>
+                        <a
+                            className="link"
+                            href="https://github.com/Akoot/UltraVanilla"
+                            target="blank"
+                            rel="noreferrer"
+                        >
+                            UltraVanilla on GitHub
+                        </a>
 
-                    <p>All plugins we use: Brewery, Chairs, CoreProtect, DiscordSRV, dynmap, Dynmap-WorldGuard, FoundDiamonds, HeadDatabase, LimitPillagers, LuckPerms, ProtocolLib, SuperVanish, TimedRestart, UltraVanilla, Vault, WorldEdit, WorldGuard</p>
-                    </div>
+                        <p>
+                            All plugins we use: Brewery, Chairs, CoreProtect, DiscordSRV, dynmap, Dynmap-WorldGuard,
+                            FoundDiamonds, HeadDatabase, LimitPillagers, LuckPerms, ProtocolLib, SuperVanish,
+                            TimedRestart, UltraVanilla, Vault, WorldEdit, WorldGuard
+                        </p>
+                    </div>,
                 );
 
                 jsPanel.create({
@@ -178,24 +186,27 @@ window.addEventListener("load", function () {
                 }
 
                 const contents = $(
-                  <div>
-                    <h3>Configure UI</h3>
-                    <div className="settings-list-of-elements" />
-                  </div>
+                    <div>
+                        <h3>Configure UI</h3>
+                        <div className="settings-list-of-elements" />
+                    </div>,
                 );
 
                 // generate a toggle checkbox for each thing that can be disabled
                 $("[data-toggle]").each((_, elem) => {
                     const name = $(elem).data("toggle");
-                    let enabled =
-                        localStorage[`elementEnabled.${name}`] !== "false";
+                    let enabled = localStorage[`elementEnabled.${name}`] !== "false";
 
                     const checkbox = $(
                         <div>
-                            <input type="checkbox" id={`element-toggle-checkbox-${name}`} className="element-toggle-checkbox" />
+                            <input
+                                type="checkbox"
+                                id={`element-toggle-checkbox-${name}`}
+                                className="element-toggle-checkbox"
+                            />
                             <label htmlFor={`element-toggle-checkbox-${name}`}>Show this thing?</label>
                             <div className="element-toggle-preview" />
-                        </div>
+                        </div>,
                     );
 
                     // show a non-interactive copy of the element
@@ -209,9 +220,7 @@ window.addEventListener("load", function () {
 
                     previewElem.find("*").unbind("click");
 
-                    checkbox
-                        .find(".element-toggle-preview")
-                        .append(previewElem);
+                    checkbox.find(".element-toggle-preview").append(previewElem);
 
                     const checkboxInput = checkbox.find("input");
                     checkboxInput.prop("checked", enabled);
@@ -226,9 +235,7 @@ window.addEventListener("load", function () {
                         }
                     });
 
-                    contents
-                        .find(".settings-list-of-elements")
-                        .append(checkbox);
+                    contents.find(".settings-list-of-elements").append(checkbox);
                 });
 
                 panel = jsPanel.create({
@@ -250,9 +257,7 @@ window.addEventListener("load", function () {
         let coords = { x: 0, y: 64, z: 0, world: dynmap.world };
 
         function getCenterCoords() {
-            coords = dynmap.maptype
-                .getProjection()
-                .fromLatLngToLocation(map.getBounds().getCenter(), 64);
+            coords = dynmap.maptype.getProjection().fromLatLngToLocation(map.getBounds().getCenter(), 64);
 
             coords.x = Math.round(coords.x);
             coords.z = Math.round(coords.z);
@@ -285,9 +290,9 @@ window.addEventListener("load", function () {
                     return;
                 }
                 const parts = location.hash.slice(2).split(",");
-                let zoom = parseFloat(parts[0]);
-                let x = parseFloat(parts[1]);
-                let z = parseFloat(parts[2]);
+                const zoom = parseFloat(parts[0]);
+                const x = parseFloat(parts[1]);
+                const z = parseFloat(parts[2]);
 
                 if (isNaN(zoom) || isNaN(x) || isNaN(z)) return;
 
@@ -296,11 +301,13 @@ window.addEventListener("load", function () {
                 if (world !== "world_nether" && world !== "world_the_end") world = "world";
 
                 dynmap.panToLocation({
-                    world: dynmap.worlds[world], x, z, y: 64
+                    world: dynmap.worlds[world],
+                    x,
+                    z,
+                    y: 64,
                 });
                 map.setZoom(zoom);
             }
-
         }
 
         // display crosshair location and distance from mouse, and logic for copying coordinates
@@ -313,21 +320,19 @@ window.addEventListener("load", function () {
                     <div className="coord-control-label">Crosshair Location:</div>
                     <div className="coord-control-value">---,---,---</div>
                     <div>Click to copy to clipboard</div>
-                </div>
+                </div>,
             );
             const distanceIndicator = $(
                 <div className="coord-control leaflet-control" data-toggle="distance-indicator">
                     <div className="coord-control-label">Distance: </div>
                     <div className="coord-control-value">---</div>
-                </div>
+                </div>,
             );
 
             distanceIndicator.appendTo($(".leaflet-top.leaflet-left"));
             centerCoords.appendTo($(".leaflet-top.leaflet-left"));
 
-            const distanceValue = distanceIndicator.find(
-                ".coord-control-value"
-            );
+            const distanceValue = distanceIndicator.find(".coord-control-value");
             const centerCoordsValue = centerCoords.find(".coord-control-value");
 
             function updateCoords() {
@@ -339,18 +344,9 @@ window.addEventListener("load", function () {
             updateCoords();
             map.on("move", updateCoords);
             map.on("mousemove", (event: any) => {
-                const mouse = dynmap
-                    .getProjection()
-                    .fromLatLngToLocation(event.latlng, 64);
+                const mouse = dynmap.getProjection().fromLatLngToLocation(event.latlng, 64);
                 // calculate distance
-                distanceValue.text(
-                    Math.floor(
-                        Math.sqrt(
-                            (coords.x - mouse.x) ** 2 +
-                                (coords.z - mouse.z) ** 2
-                        )
-                    )
-                );
+                distanceValue.text(Math.floor(Math.sqrt((coords.x - mouse.x) ** 2 + (coords.z - mouse.z) ** 2)));
             });
 
             // coordinates copying
@@ -363,30 +359,20 @@ window.addEventListener("load", function () {
                     .find(`#copy-coordinates0`)
                     .val(`${coords.x}, ${coords.z} in ${coords.world.humanName}`);
 
-                $(panel.content)
-                    .find(`#copy-coordinates1`)
-                    .val(`x${coords.x}/y${coords.y}/z${coords.z}`);
+                $(panel.content).find(`#copy-coordinates1`).val(`x${coords.x}/y${coords.y}/z${coords.z}`);
 
                 $(panel.content)
                     .find(`#copy-coordinates2`)
                     .val(`/co tp ${coords.world.name} ${coords.x} ${coords.y} ${coords.z}`);
 
-                $(panel.content)
-                    .find(`#copy-coordinates3`)
-                    .val(`${coords.x} ${coords.y} ${coords.z}`);
+                $(panel.content).find(`#copy-coordinates3`).val(`${coords.x} ${coords.y} ${coords.z}`);
 
-                $(panel.content)
-                    .find(`#copy-coordinates4`)
-                    .val(`${coords.x},${coords.y},${coords.z}`);
+                $(panel.content).find(`#copy-coordinates4`).val(`${coords.x},${coords.y},${coords.z}`);
 
-                $(panel.content)
-                    .find(`#copy-coordinates5`)
-                    .val(location.toString());
+                $(panel.content).find(`#copy-coordinates5`).val(location.toString());
 
                 // automatically copy to clipboard
-                $(panel.content)
-                    .find(`#copy-coordinates${localStorage.copyPreference}`)
-                    .select();
+                $(panel.content).find(`#copy-coordinates${localStorage.copyPreference}`).select();
 
                 document.execCommand("copy");
             });
@@ -399,41 +385,76 @@ window.addEventListener("load", function () {
                     <div className="copy-coordinates-window">
                         <table>
                             <tr>
-                                <td><label htmlFor="copy-coordinates0">Human</label></td>
-                                <td><input type="text" id="copy-coordinates0" className="copy-coordinates"/></td>
-                                <td><button data-option="0">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates0">Human</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates0" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="0">Set as default</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="copy-coordinates1">Human2</label></td>
-                                <td><input type="text" id="copy-coordinates1" className="copy-coordinates"/></td>
-                                <td><button data-option="1">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates1">Human2</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates1" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="1">Set as default</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="copy-coordinates2">Teleport</label></td>
-                                <td><input type="text" id="copy-coordinates2" className="copy-coordinates"/></td>
-                                <td><button data-option="2">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates2">Teleport</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates2" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="2">Set as default</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="copy-coordinates3">Spaces</label></td>
-                                <td><input type="text" id="copy-coordinates3" className="copy-coordinates"/></td>
-                                <td><button data-option="3">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates3">Spaces</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates3" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="3">Set as default</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="copy-coordinates4">Commas</label></td>
-                                <td><input type="text" id="copy-coordinates4" className="copy-coordinates"/></td>
-                                <td><button data-option="4">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates4">Commas</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates4" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="4">Set as default</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td><label htmlFor="copy-coordinates5">URL</label></td>
-                                <td><input type="text" id="copy-coordinates5" className="copy-coordinates"/></td>
-                                <td><button data-option="5">Set as default</button></td>
+                                <td>
+                                    <label htmlFor="copy-coordinates5">URL</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="copy-coordinates5" className="copy-coordinates" />
+                                </td>
+                                <td>
+                                    <button data-option="5">Set as default</button>
+                                </td>
                             </tr>
                         </table>
-                    </div>
+                    </div>,
                 );
 
-                if (localStorage.copyPreference == null)
-                    localStorage.copyPreference = "0";
+                if (localStorage.copyPreference == null) localStorage.copyPreference = "0";
 
                 // save format preference
                 contents
@@ -443,13 +464,9 @@ window.addEventListener("load", function () {
                         contents.find("button").show();
                         const copyPreference = $(evt.currentTarget).attr("data-option");
                         localStorage.copyPreference = copyPreference;
-                        contents
-                            .find(`button[data-option=${localStorage.copyPreference}]`)
-                            .hide();
+                        contents.find(`button[data-option=${localStorage.copyPreference}]`).hide();
                     });
-                contents
-                    .find(`button[data-option=${localStorage.copyPreference}]`)
-                    .hide();
+                contents.find(`button[data-option=${localStorage.copyPreference}]`).hide();
 
                 panel = jsPanel.create({
                     content: contents[0],
@@ -509,12 +526,14 @@ window.addEventListener("load", function () {
                 <form>
                     <div>
                         <label htmlFor="input-coordinates">Coordinate string:</label>
-                        <input type="text" id="input-coordinates" className="input-coordinates"/>
+                        <input type="text" id="input-coordinates" className="input-coordinates" />
                     </div>
                     <div>
                         <label htmlFor="input-coordinates-format">Format: </label>
                         <select id="input-coordinates-format" className="input-coordinates-format">
-                            <option value="xyz" selected>XYZ (Press F3+C ingame)</option>
+                            <option value="xyz" selected>
+                                XYZ (Press F3+C ingame)
+                            </option>
                             <option value="xzy">XZ (VoxelMap)</option>
                         </select>
                         <div>
@@ -527,16 +546,20 @@ window.addEventListener("load", function () {
                         </div>
                     </div>
                     <div>
-                        <div><label htmlFor="input-coordinates-x">X:</label>
-                        <input type="number" id="input-coordinates-x" className="input-coordinates-x" step="any"/></div>
-                        <div><label htmlFor="input-coordinates-z">Z:</label>
-                        <input type="number" id="input-coordinates-z" className="input-coordinates-z" step="any"/></div>
+                        <div>
+                            <label htmlFor="input-coordinates-x">X:</label>
+                            <input type="number" id="input-coordinates-x" className="input-coordinates-x" step="any" />
+                        </div>
+                        <div>
+                            <label htmlFor="input-coordinates-z">Z:</label>
+                            <input type="number" id="input-coordinates-z" className="input-coordinates-z" step="any" />
+                        </div>
                     </div>
                     <div>
-                        <input type="submit" className="input-coordinates-go" value="Goto Location"/>
-                        <input type="submit" className="input-coordinates-ok" value="Goto Location and Dismiss"/>
+                        <input type="submit" className="input-coordinates-go" value="Goto Location" />
+                        <input type="submit" className="input-coordinates-ok" value="Goto Location and Dismiss" />
                     </div>
-                </form>
+                </form>,
             );
 
             // avoid form submission to webserver
@@ -570,16 +593,12 @@ window.addEventListener("load", function () {
                 const str = inputStringCoordinates.val() as string;
 
                 if (inputFormat.val() === "xyz") {
-                    const matches = str.match(
-                        /[^\d\.\-]*([\d\.\-]+)[^\d\-\.]+([\d\.\-]+)[^\d\-\.]+([\d\.\-]+)/
-                    );
+                    const matches = str.match(/[^\d.-]*([\d.-]+)[^\d\-.]+([\d.-]+)[^\d\-.]+([\d.-]+)/);
                     if (matches == null || matches.length < 4) return;
                     inputX.val(matches[1]);
                     inputZ.val(matches[3]);
                 } else {
-                    const matches = str.match(
-                        /[^\d\.\-]*([\d\.\-]+)[^\d\-\.]+([\d\.\-]+)/
-                    );
+                    const matches = str.match(/[^\d.-]*([\d.-]+)[^\d\-.]+([\d.-]+)/);
                     if (matches == null || matches.length < 3) return;
                     inputX.val(matches[1]);
                     inputZ.val(matches[2]);
@@ -627,13 +646,8 @@ window.addEventListener("load", function () {
             // store the state of sidebar pinning
             const pinnedObserver = new MutationObserver((mutationsList) => {
                 mutationsList.forEach((mutation) => {
-                    if (
-                        mutation.attributeName === "class" &&
-                        mutation.target instanceof HTMLElement
-                    ) {
-                        const isPinned = mutation.target.classList.contains(
-                            "pinned"
-                        );
+                    if (mutation.attributeName === "class" && mutation.target instanceof HTMLElement) {
+                        const isPinned = mutation.target.classList.contains("pinned");
 
                         if (isPinned) {
                             $(".tools-buttons").addClass("sidebar-pinned");
@@ -649,8 +663,7 @@ window.addEventListener("load", function () {
                 attributes: true,
             });
 
-            if (localStorage.pinSidebar === "true")
-                $(".dynmap .sidebar").addClass("pinned");
+            if (localStorage.pinSidebar === "true") $(".dynmap .sidebar").addClass("pinned");
         }
     }
 

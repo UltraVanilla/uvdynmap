@@ -12,14 +12,12 @@ const pkgPath = pkgDir.sync() || process.cwd();
 const logger = winston.createLogger({
     format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
+        winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
     ),
-    transports: [
-        new winston.transports.Console(),
-    ]
+    transports: [new winston.transports.Console()],
 });
 
-const app = new Koa;
+const app = new Koa();
 
 app.use(serve(pkgPath + "/dynmap"));
 app.use(mount("/assets", serve(pkgPath + "/assets")));
@@ -37,10 +35,12 @@ app.use(router.allowedMethods());
 
 // end of our routes middleware
 
-app.use(proxy("/", {
-    target: process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/",
-    changeOrigin: true,
-}));
+app.use(
+    proxy("/", {
+        target: process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/",
+        changeOrigin: true,
+    }),
+);
 
-app.listen(process.env.PORT || 8080)
+app.listen(process.env.PORT || 8080);
 logger.log("info", "App has started");

@@ -3,13 +3,13 @@ import Koa from "koa";
 import fetch from "node-fetch";
 import cheerio from "cheerio";
 
-export default async (ctx: Koa.Context) => {
+export default async (ctx: Koa.Context): Promise<void> => {
     let body;
     let loaded = false;
     let error;
     try {
         const res = await fetch(process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/", {
-            timeout: 7500
+            timeout: 7500,
         });
         body = await res.text();
         loaded = true;
@@ -59,18 +59,11 @@ export default async (ctx: Koa.Context) => {
 
     const newContainer = $("<div class=box>");
 
-    const newHeader = $("<div>")
-        .addClass("header");
+    const newHeader = $("<div>").addClass("header");
 
-    $("<div>")
-        .text("UltraVanilla")
-        .addClass("header-part uv-logo-name")
-        .appendTo(newHeader);
+    $("<div>").text("UltraVanilla").addClass("header-part uv-logo-name").appendTo(newHeader);
 
-    $("<img>")
-        .attr("src", "assets/416.png")
-        .addClass("header-part uv-logo")
-        .appendTo(newHeader);
+    $("<img>").attr("src", "assets/416.png").addClass("header-part uv-logo").appendTo(newHeader);
 
     $(`
         <span class='header-info-container'>
@@ -81,9 +74,7 @@ export default async (ctx: Koa.Context) => {
         </span>
     `).appendTo(newHeader);
 
-    $("<span>")
-        .addClass("header-separator")
-        .appendTo(newHeader);
+    $("<span>").addClass("header-separator").appendTo(newHeader);
 
     $("<a href='https://discord.gg/kU4dkzk' target='blank' rel='noreferrer'>discord</a>")
         .addClass("header-part server-social server-discord")
@@ -97,9 +88,7 @@ export default async (ctx: Koa.Context) => {
         .addClass("header-part server-social server-wiki")
         .appendTo(newHeader);
 
-    $("<a href='#'>open source</a>")
-        .addClass("header-part server-social server-open-source")
-        .appendTo(newHeader);
+    $("<a href='#'>open source</a>").addClass("header-part server-social server-open-source").appendTo(newHeader);
 
     newContainer.append(newHeader);
 
@@ -107,7 +96,8 @@ export default async (ctx: Koa.Context) => {
     if (loaded) {
         $("body #mcmap").appendTo(newContainer);
 
-        if (loaded) $(`
+        if (loaded)
+            $(`
             <div class="tools-buttons">
                 <button class="tools-button tools-settings">Settings</button>
                 <button class="tools-button tools-go-to-coordinates" data-toggle="go-to-coordinates">Go to coordinates</button>
@@ -121,38 +111,25 @@ export default async (ctx: Koa.Context) => {
             </div>
         `).appendTo($("body"));
 
-        $("<script>")
-            .attr("type", "application/javascript")
-            .attr("src", "assets/ultravanilla.js")
-            .appendTo($("head"));
+        $("<script>").attr("type", "application/javascript").attr("src", "assets/ultravanilla.js").appendTo($("head"));
     } else {
-        const err = $(`
+        $(`
             <div class="dynmap-broke">
                 <h3>Dynmap broke lol</h3>
                 <pre class="error-msg"></pre>
             </div>
         `)
             .appendTo(newContainer)
-            .find(".error-msg").text(error.stack);
+            .find(".error-msg")
+            .text(error.stack);
     }
     newContainer.appendTo($("body"));
 
-    $("<link>")
-        .attr("href", "assets/ultravanilla.css")
-        .attr("rel", "stylesheet")
-        .appendTo($("head"));
+    $("<link>").attr("href", "assets/ultravanilla.css").attr("rel", "stylesheet").appendTo($("head"));
 
-    $("<link>")
-        .attr("href", "assets/jspanel.min.css")
-        .attr("rel", "stylesheet")
-        .appendTo($("head"));
+    $("<link>").attr("href", "assets/jspanel.min.css").attr("rel", "stylesheet").appendTo($("head"));
 
-    $("<link>")
-        .attr("href", "assets/fonts.css")
-        .attr("rel", "stylesheet")
-        .appendTo($("head"));
-
+    $("<link>").attr("href", "assets/fonts.css").attr("rel", "stylesheet").appendTo($("head"));
 
     ctx.body = $.root().html();
-
 };
