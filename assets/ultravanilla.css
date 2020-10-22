@@ -263,3 +263,11 @@ body {
         text-align: center;
     }
 }
+
+.coreprotect-delta .CodeMirror {
+    border: 2px solid #c4c4c4;
+}
+
+.CodeMirror {
+    font-family: "Inconsolata", "Consolas", monospace;
+}

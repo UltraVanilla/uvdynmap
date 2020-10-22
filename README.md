@@ -22,19 +22,17 @@ Building
 
 `npm install` - **Install dependencies and compile everything**
 
-`npm run build` - Compile typescript
+`npm run build` - Compile everything
 
-`npm run build-ts` - Compile typescript
+`npm run ts` - Compile typescript
 
-`npm run bundle` - Compile clientside javascript (must do `build-ts` first)
+`npm run bundle` - Compile clientside javascript (must do `ts` first)
 
 `npm run grab-vendor-assets` - Download fonts
 
 ---
 
-`npm run watch-ts` - Automatically compile typescript as you edit
-
-`npm run watch-bundle` - Automatically bundle every time you compile typescript
+`npm run watch` - Automatically compile typescript and output bundles as you edit
 
 ---
 

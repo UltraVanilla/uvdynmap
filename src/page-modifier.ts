@@ -111,7 +111,7 @@ export default async (ctx: Koa.Context): Promise<void> => {
             </div>
         `).appendTo($("body"));
 
-        $("<script>").attr("type", "application/javascript").attr("src", "assets/ultravanilla.js").appendTo($("head"));
+        $("<script>").attr("type", "application/javascript").attr("src", "assets/dynmap.js").appendTo($("head"));
     } else {
         $(`
             <div class="dynmap-broke">
