@@ -1,7 +1,9 @@
 html {
     box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
@@ -19,7 +21,7 @@ html {
 }
 
 body {
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
 }
 .header {
     background-color: #0f0f0f;
@@ -28,7 +30,7 @@ body {
     font-size: 17px;
 }
 
-.header.header-disabled { 
+.header.header-disabled {
     display: none;
 }
 
@@ -45,7 +47,8 @@ body {
     color: #8c94e6;
 }
 
-.header-part.server-social:hover, .header-part.server-social:active {
+.header-part.server-social:hover,
+.header-part.server-social:active {
     background-color: #9f9f9f;
     color: #1c1c1c;
 }
@@ -142,15 +145,16 @@ body {
     color: #8c94e6;
     text-decoration: underline;
 }
-.tools-button:active, .tools-button:hover {
+.tools-button:active,
+.tools-button:hover {
     background-color: #9f9f9f;
     color: #1c1c1c;
 }
 
 .element-toggle-preview {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #a0a0a0;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #a0a0a0;
 }
 
 .mw-parser-output {
@@ -164,17 +168,18 @@ body {
 }
 
 .copy-coordinates-window button {
-  width: 140px;
-  height: 32px;
+    width: 140px;
+    height: 32px;
 }
 
-.copy-coordinates-window input[type=text] {
-  width: 216px;
-  height: 32px;
+.copy-coordinates-window input[type="text"] {
+    width: 216px;
+    height: 32px;
 }
 
 @media screen and (min-device-width: 640px) {
-    .dynmap .hitbar, .dynmap .sidebar {
+    .dynmap .hitbar,
+    .dynmap .sidebar {
         transition: all 0.3s;
     }
 }
@@ -222,7 +227,8 @@ body {
     .header-info-container {
         display: inline-block;
     }
-    .header-part.server-social, .header-part.server-info {
+    .header-part.server-social,
+    .header-part.server-info {
         width: 100%;
         padding: 4px;
     }

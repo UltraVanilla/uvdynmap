@@ -1,6 +1,6 @@
 lib/
 vendor/
-assets/ultravanilla.js
+assets/*.js
 
 # Created by https://www.toptal.com/developers/gitignore/api/vim,linux,windows,macos,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=vim,linux,windows,macos,node
