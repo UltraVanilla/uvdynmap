@@ -8,7 +8,7 @@ const logsTextArea = document.getElementById("coreprotect-delta-logs") as HTMLTe
 const outputTextArea = document.getElementById("coreprotect-delta-output") as HTMLTextAreaElement;
 
 const defaultOptions = `return {
-    ignoreRollback: true,
+    ignoreRolledBack: true,
     needSorting: false,
 //     whitelistUsernames: [],
 //     blacklistUsernames: [],
