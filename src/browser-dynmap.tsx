@@ -223,7 +223,12 @@ window.addEventListener("load", function () {
 
                     const button = $(".tools-account");
 
-                    const roleStyle = roleColors[accountInfo.roles[0]];
+                    const capitalizedRoleName =
+                        accountInfo.roles[0].charAt(0).toUpperCase() + accountInfo.roles[0].slice(1);
+                    const roleStyle = roleColors[accountInfo.roles[0]] || {
+                        color: "#ffffff",
+                        name: capitalizedRoleName,
+                    };
 
                     button.empty().append(
                         $(
