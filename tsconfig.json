@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "esModuleInterop": true,
-        "target": "es2020",
+        "target": "es2018",
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "lib",
@@ -13,7 +13,7 @@
                 "src/types/*"
             ]
         },
-        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "lib": ["ES2018", "DOM", "DOM.Iterable"],
 
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -30,6 +30,8 @@
         "listFiles": false,
         "pretty": true,
         "declaration": true,
+
+        "experimentalDecorators": true,
 
         "jsx": "react"
     },

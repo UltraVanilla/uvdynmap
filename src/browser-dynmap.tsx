@@ -2,6 +2,9 @@ import jsPanel from "jspanel4/dist/jspanel";
 import jQueryType from "jquery";
 import React from "jsx-dom";
 
+import roleColors from "./role-colors";
+import { AccountInfo, isStaff } from "./auth/auth-api";
+
 declare global {
     interface Window {
         jQuery: typeof jQueryType;
@@ -15,9 +18,20 @@ let dynmap = window.dynmap;
 let map = window.map;
 const $ = window.$;
 
-window.addEventListener("load", function () {
-    dynmap = window.dynmap;
+function waitForDynmap() {
+    return new Promise((resolve) => {
+        // yup
+        const timer = setInterval(() => {
+            if (window.dynmap != null) {
+                clearInterval(timer);
+                dynmap = window.dynmap;
+                resolve(dynmap);
+            }
+        }, 60);
+    });
+}
 
+window.addEventListener("load", function () {
     // a way to handle multiple things loading to indicate it with only one spinner
     const loadAnimationController = {
         thingsLoading: new Set(),
@@ -36,18 +50,21 @@ window.addEventListener("load", function () {
     };
 
     loadAnimationController.load("firstupdate");
-    $(dynmap).one("worldupdating", () => {
-        map = window.map;
-        loadAnimationController.finish("firstupdate");
-        // once dynmap starts, we can start our extensions
-        loadUltraVanilla();
-    });
 
-    $(dynmap).bind("load-from-center", () => {
-        loadAnimationController.load("tiles");
-    });
-    $(dynmap).bind("tile-queue-loaded", () => {
-        loadAnimationController.finish("tiles");
+    waitForDynmap().then(() => {
+        $(dynmap).one("worldupdating", () => {
+            map = window.map;
+            loadAnimationController.finish("firstupdate");
+            // once dynmap starts, we can start our extensions
+            loadUltraVanilla();
+        });
+
+        $(dynmap).bind("load-from-center", () => {
+            loadAnimationController.load("tiles");
+        });
+        $(dynmap).bind("tile-queue-loaded", () => {
+            loadAnimationController.finish("tiles");
+        });
     });
 
     async function loadUltraVanilla() {
@@ -170,6 +187,81 @@ window.addEventListener("load", function () {
                     headerTitle: "Open Source",
                     position: "center",
                     panelSize: "410 560",
+                });
+            });
+        }
+
+        // account panel
+        {
+            let panel: jsPanel.JsPanel | null;
+
+            const contents = $(
+                <div>
+                    <h3>Account</h3>
+                    <p>
+                        Run <code>/token</code> ingame to log in
+                    </p>
+                    <p>
+                        Logged in as: <strong className="account-logged-in-as">Not logged in</strong>
+                    </p>
+                    <p>
+                        Mojang UUID: <strong className="account-logged-in-as-uuid">Not logged in</strong>
+                    </p>
+                    <a className="link" href="/logout" style="display:none;" rel="noreferrer">
+                        Logout
+                    </a>
+                </div>,
+            );
+
+            (async () => {
+                try {
+                    const accountInfoRes = await fetch("/account-info");
+                    const accountInfo: AccountInfo = await accountInfoRes.json();
+                    contents.find(".account-logged-in-as").text(accountInfo.name);
+                    contents.find(".account-logged-in-as-uuid").text(accountInfo.uuid);
+                    contents.find(".link").show();
+
+                    const button = $(".tools-account");
+
+                    const roleStyle = roleColors[accountInfo.roles[0]];
+
+                    button.empty().append(
+                        $(
+                            <>
+                                [<span style={`color:${roleStyle.color}`}>{roleStyle.name}</span>] {accountInfo.name}
+                            </>,
+                        ),
+                    );
+
+                    if (isStaff(accountInfo)) {
+                        contents.append(
+                            <>
+                                <h4>Staff tools</h4>
+                                <a className="link" href="/staff/coreprotect-tools" target="blank" rel="noreferrer">
+                                    CoreProtect tools by lordpipe
+                                </a>
+                            </>,
+                        );
+                    }
+                } catch (err) {
+                    // fail silently
+                }
+            })();
+
+            $(".tools-account").click(async () => {
+                if (panel != null) {
+                    panel.normalize();
+                    panel.front();
+                    return;
+                }
+                panel = jsPanel.create({
+                    content: contents[0],
+                    headerTitle: "Account",
+                    position: "center",
+                    panelSize: "430 350",
+                    onclosed() {
+                        panel = null;
+                    },
                 });
             });
         }

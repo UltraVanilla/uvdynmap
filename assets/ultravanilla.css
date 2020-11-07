@@ -125,13 +125,13 @@ body {
     position: absolute;
     bottom: 5px;
     right: 30px;
-    font-size: 19px;
+    font-size: 15px;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 15px;
+    padding: 12px;
 }
 
 .tools-buttons > * {
-    margin: 10px 0px;
+    margin: 7px 0px;
 }
 
 .tools-button {

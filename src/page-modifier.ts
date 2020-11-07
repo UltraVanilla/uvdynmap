@@ -3,7 +3,7 @@ import Koa from "koa";
 import fetch from "node-fetch";
 import cheerio from "cheerio";
 
-export default async (ctx: Koa.Context): Promise<void> => {
+export default async (ctx: Koa.BaseContext): Promise<void> => {
     let body;
     let loaded = false;
     let error;
@@ -98,18 +98,19 @@ export default async (ctx: Koa.Context): Promise<void> => {
 
         if (loaded)
             $(`
-            <div class="tools-buttons">
-                <button class="tools-button tools-settings">Settings</button>
-                <button class="tools-button tools-go-to-coordinates" data-toggle="go-to-coordinates">Go to coordinates</button>
-                <button class="tools-button tools-nether-portal" data-toggle="nether-portal">Go through nether portal</button>
-                <button class="tools-button tools-jump-to-old-spawn" data-toggle="jump-to-old-spawn">Jump to Old Spawn</button>
-                <button class="tools-button tools-jump-to-new-spawn" data-toggle="jump-to-new-spawn">Jump to Spawn</button>
-                <div class="toggles">
-                    <div data-toggle="enable-header"><label for='header-checkbox'>Enable header? </label><input type='checkbox' id='header-checkbox' class='header-checkbox' checked></div>
-                    <div data-toggle="enable-crosshair"><label for='crosshair-checkbox'>Enable crosshair? </label><input type='checkbox' id='crosshair-checkbox' class='crosshair-checkbox'></div>
+                <div class="tools-buttons">
+                    <button class="tools-button tools-settings">Settings</button>
+                    <button class="tools-button tools-account" data-toggle="login">Login</button>
+                    <button class="tools-button tools-go-to-coordinates" data-toggle="go-to-coordinates">Go to coordinates</button>
+                    <button class="tools-button tools-nether-portal" data-toggle="nether-portal">Go through nether portal</button>
+                    <button class="tools-button tools-jump-to-old-spawn" data-toggle="jump-to-old-spawn">Jump to Old Spawn</button>
+                    <button class="tools-button tools-jump-to-new-spawn" data-toggle="jump-to-new-spawn">Jump to Spawn</button>
+                    <div class="toggles">
+                        <div data-toggle="enable-header"><label for='header-checkbox'>Enable header? </label><input type='checkbox' id='header-checkbox' class='header-checkbox' checked></div>
+                        <div data-toggle="enable-crosshair"><label for='crosshair-checkbox'>Enable crosshair? </label><input type='checkbox' id='crosshair-checkbox' class='crosshair-checkbox'></div>
+                    </div>
                 </div>
-            </div>
-        `).appendTo($("body"));
+            `).appendTo($("body"));
 
         $("<script>").attr("type", "application/javascript").attr("src", "assets/dynmap.js").appendTo($("head"));
     } else {

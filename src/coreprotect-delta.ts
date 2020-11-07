@@ -1,4 +1,4 @@
-import { parse, add, sub } from "date-fns";
+import { parse } from "date-fns";
 
 function parseData(data: string) {
     const startPos = data.match(/\[main\/INFO\]: \[CHAT\] ------ Current Lag ------/)?.index || 0;
@@ -48,31 +48,29 @@ function parseData(data: string) {
         // add a millisecond every time we scan the next log, to separate entries that fall within
         // same margin of error
         timeTweak += 1;
-        timeOfCommand = add(timeOfCommand, { seconds: timeTweak / 1000 });
+        let timeOfCommandMs = timeOfCommand.getTime() + timeTweak;
 
-        function timeAgoUnitToDuration(timeAgoUnit: string, timeAgo: number) {
-            const duration: Duration = {};
-            switch (timeAgoUnit) {
-                case "w":
-                    duration.weeks = timeAgo;
-                    break;
-                case "d":
-                    duration.days = timeAgo;
-                    break;
-                case "h":
-                    duration.hours = timeAgo;
-                    break;
-                case "m":
-                    duration.minutes = timeAgo;
-                    break;
-                case "s":
-                    duration.seconds = timeAgo;
-                    break;
-            }
-            return duration;
+        let newTime = timeOfCommandMs;
+
+        switch (timeAgoUnit) {
+            case "w":
+                newTime -= 604800000 * timeAgo;
+                break;
+            case "d":
+                newTime -= 86400000 * timeAgo;
+                break;
+            case "h":
+                newTime -= 3600000 * timeAgo;
+                break;
+            case "m":
+                newTime -= 60000 * timeAgo;
+                break;
+            case "s":
+                newTime -= 1000 * timeAgo;
+                break;
         }
 
-        const timestamp = sub(timeOfCommand, timeAgoUnitToDuration(timeAgoUnit, timeAgo));
+        const timestamp = new Date(newTime);
 
         const isRolledBack = text.match(/\[.*\] \[main\/INFO\]: \[CHAT\] §7\d*\.?\d*\/. ago §f- §m/) != null;
         const username = text.match(/\[.*\] \[main\/INFO\]: \[CHAT\] §7\d*\.?\d*\/. ago ?§f ?- (§m)?(.*):? §f/)![2];
@@ -83,7 +81,6 @@ function parseData(data: string) {
             )![2];
         } catch (err) {
             // sign has a totally different formatting, too much a pain in the ass to detect
-            //console.log(text);
             action = "sign";
         }
 
