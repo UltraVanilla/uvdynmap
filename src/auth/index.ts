@@ -37,10 +37,11 @@ export function ultravanillaSession(
         sessionMiddleware,
         async (ctx: Koa.Context, next: Koa.Next): Promise<void> => {
             let allowed = false;
-            if (ctx.session?.uuid == null) {
+            let user;
+            if (ctx.session?.uuid == null || (user = await getCachedUser(ctx.session!.uuid)) == null) {
                 allowed = filter({});
+                ctx.session = null;
             } else {
-                const user = await getCachedUser(ctx.session!.uuid);
                 const roles = user.userAccount.roles;
 
                 ctx.coreProtectUser = user;
