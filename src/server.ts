@@ -60,14 +60,19 @@ app.use(router.allowedMethods());
 
 app.use(
     proxy("/", {
-        target: process.env.DYNMAP_BACKEND || "http://104.238.205.145:8123/",
+        target: process.env.DYNMAP_BACKEND || "http://199.127.63.229:8123/",
         changeOrigin: true,
     }),
 );
 
 import { dbReady } from "./knex";
 
-dbReady.then(() => {
-    app.listen(process.env.PORT || 8080);
-    logger.log("info", "App has started");
-});
+dbReady
+    .catch((err) => {
+        console.error(err);
+        logger.log("warn", "Database does not exist or could not migrate!");
+    })
+    .then(() => {
+        app.listen(process.env.PORT || 8080);
+        logger.log("info", "App has started");
+    });
