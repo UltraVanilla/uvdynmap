@@ -109,6 +109,7 @@ body {
 .link {
     color: #fff;
     border: none;
+    display: inline-block;
     padding: 5px 10px;
 
     background-color: rgba(28, 28, 28, 0.12);
@@ -266,8 +267,23 @@ body {
 
 .coreprotect-delta .CodeMirror {
     border: 2px solid #c4c4c4;
+    width: 50%;
+    min-width: 300px;
 }
 
-.CodeMirror {
+.CodeMirror,
+.pre {
     font-family: "Inconsolata", "Consolas", monospace;
+}
+
+.coreprotect-log {
+    font-size: 15px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 8px;
+}
+
+.warning {
+    background-color: #f178a6;
+    padding: 10px;
+    display: inline-block;
 }

@@ -1,6 +1,6 @@
 import { parse } from "date-fns";
 
-function parseData(data: string) {
+function parseData(data: string): LogEntry[] {
     const startPos = data.match(/\[main\/INFO\]: \[CHAT\] ------ Current Lag ------/)?.index || 0;
 
     data = data.slice(startPos);
@@ -8,7 +8,9 @@ function parseData(data: string) {
     const uncombinedLogs = data.split("\n").filter((str) => {
         return (
             str.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §7\d*\.?\d*/) ||
-            str.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f        [ ]+   §/)
+            str.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f        [ ]+   §/) ||
+            str.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f----- Container Transactions §f----- §7\((.*)\)/) ||
+            str.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f-----$/)
         );
     });
 
@@ -35,12 +37,42 @@ function parseData(data: string) {
         logs.push(newLine);
     });
 
+    let lastCoords: undefined | string;
+    logs = logs.map((line) => {
+        const matches = line.match(
+            /^\[.*\] \[main\/INFO\]: \[CHAT\] §f----- Container Transactions §f----- §7\((.*)\)/,
+        );
+
+        if (line.match(/\n/) != null) {
+            lastCoords = undefined;
+            return line;
+        }
+        if (line.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f-----$/)) {
+            lastCoords = undefined;
+            return "";
+        }
+
+        const outputLines = [];
+        if (matches != null && matches[1] != null) {
+            lastCoords = `[00:00:00] [main/INFO]: [CHAT] §f                 §7^ §7§o(${matches[1]}/unknown)`;
+        } else outputLines.push(line);
+
+        if (lastCoords != null) outputLines.push(lastCoords);
+
+        //console.log(line);
+        return outputLines.join("\n");
+    });
+
+    console.log(logs);
+
     // in case there is a stray coordinate line, prevent it from choking the parsing
-    logs = logs.reverse().filter((log) => log.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f [ ]+  §/) == null);
+    logs = logs
+        .reverse()
+        .filter((log) => log.match(/^\[.*\] \[main\/INFO\]: \[CHAT\] §f [ ]+  §/) == null && log !== "");
 
     let timeTweak = 0;
     const logs2 = logs.map((text) => {
-        let timeOfCommand = parse(text.match(/\[([\d:]+)\]/)![1], "HH:mm:ss", new Date());
+        const timeOfCommand = parse(text.match(/\[([\d:]+)\]/)![1], "HH:mm:ss", new Date());
 
         const timeAgo = parseFloat(text.match(/\[.*\] \[main\/INFO\]: \[CHAT\] §7(\d*\.?\d*)/)![1]);
         const timeAgoUnit = text.match(/\[.*\] \[main\/INFO\]: \[CHAT\] §7\d*\.?\d*\/(.)/)![1];
@@ -48,7 +80,7 @@ function parseData(data: string) {
         // add a millisecond every time we scan the next log, to separate entries that fall within
         // same margin of error
         timeTweak += 1;
-        let timeOfCommandMs = timeOfCommand.getTime() + timeTweak;
+        const timeOfCommandMs = timeOfCommand.getTime() + timeTweak;
 
         let newTime = timeOfCommandMs;
 
@@ -151,6 +183,7 @@ function parseData(data: string) {
             itemTx,
             blockTx,
             location,
+            originalText: text,
         };
     });
 
@@ -163,6 +196,7 @@ export interface FilterOptions {
     needsSorting?: boolean;
     whitelistUsernames?: string[];
     blacklistUsernames?: string[];
+    specialFilters?: ("noDiamondsAdded" | "expensiveTheft")[];
 }
 
 export interface BoundingBox {
@@ -196,6 +230,7 @@ export interface LogEntry {
     itemTx: ItemTransaction | undefined;
     blockTx: BlockTransaction | undefined;
     location: Location | undefined;
+    originalText: string;
 }
 
 export interface ProcessedLogs {
@@ -229,6 +264,80 @@ export function processLogs(data: string, options: FilterOptions = {}): Processe
         logs = logs.filter((entry) => !blacklist.includes(entry.username));
     }
 
+    const firstDelta = itemDelta(logs);
+
+    if (options.specialFilters != null) {
+        const flaggedNames: string[] = [];
+        let flagFilter = false;
+
+        for (const filterType of options.specialFilters) {
+            switch (filterType) {
+                case "noDiamondsAdded": {
+                    flagFilter = true;
+                    for (const [username, delta] of Object.entries(firstDelta)) {
+                        const diamondTx = (delta.diamond || 0) + 9 * (delta.diamond_block || 0);
+                        if (diamondTx <= 0) {
+                            flaggedNames.push(username);
+                        }
+                    }
+
+                    break;
+                }
+                case "expensiveTheft": {
+                    flagFilter = true;
+                    for (const [username, delta] of Object.entries(firstDelta)) {
+                        const diamondTx = (delta.diamond || 0) + 9 * (delta.diamond_block || 0);
+                        if (diamondTx < -4) {
+                            flaggedNames.push(username);
+                        }
+                        if (diamondTx <= 1)
+                            for (const [item, tx] of Object.entries(delta)) {
+                                if (
+                                    [
+                                        "netherite_sword",
+                                        "diamond_sword",
+                                        "netherite_pickaxe",
+                                        "diamond_pickaxe",
+                                        "netherite_shovel",
+                                        "diamond_shovel",
+                                        "netherite_helmet",
+                                        "netherite_chestplate",
+                                        "netherite_leggings",
+                                        "netherite_boots",
+                                        "diamond_helmet",
+                                        "diamond_chestplate",
+                                        "diamond_leggings",
+                                        "diamond_boots",
+                                        "beacon",
+                                        "golden_apple",
+                                        "enchanted_golden_apple",
+                                        "end_crystal",
+                                        "totem_of_undying",
+                                        "elytra",
+                                    ].includes(item) &&
+                                    tx <= -1
+                                ) {
+                                    flaggedNames.push(username);
+                                }
+                            }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        if (flagFilter) logs = logs.filter((entry) => flaggedNames.includes(entry.username));
+    }
+    const delta = itemDelta(logs);
+
+    return {
+        delta,
+        logs,
+    };
+}
+
+function itemDelta(logs: LogEntry[]): ItemDelta {
     const delta: ItemDelta = {};
     for (const entry of logs) {
         if ((entry.action === "added" || entry.action === "removed") && entry.itemTx != null) {
@@ -239,11 +348,7 @@ export function processLogs(data: string, options: FilterOptions = {}): Processe
             itemQtys[entry.itemTx.subject] += entry.itemTx.net;
         }
     }
-
-    return {
-        delta,
-        logs,
-    };
+    return delta;
 }
 
 function filterBoundingBox(logs: any, boundingBox: BoundingBox) {

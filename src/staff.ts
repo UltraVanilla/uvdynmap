@@ -12,7 +12,7 @@ router.get("/coreprotect-tools", (ctx) => {
                 <link href="/assets/codemirror.css" rel="stylesheet">
                 <link href="/assets/ultravanilla.css" rel="stylesheet">
             </head>
-            <body>
+            <body class="coreprotect-tools">
                 <form id="coreprotect-delta" class="coreprotect-delta">
                     <div><label for="coreprotect-delta-options">Coreprotect-delta options:</label></div>
                     <div><textarea id="coreprotect-delta-options"></textarea></div>
@@ -21,7 +21,8 @@ router.get("/coreprotect-tools", (ctx) => {
                     <div><textarea id="coreprotect-delta-logs"></textarea></div>
                     <div><input type="submit" value="Compute delta" id="coreprotect-delta-submit" /></div>
                     <div><label for="coreprotect-delta-output">Results:</label></div>
-                    <div><textarea id="coreprotect-delta-output"></textarea></div>
+                    <div><pre id="coreprotect-delta-output"></pre></div>
+                    <div id="coreprotect-formatted"></div>
                 </form>
                 <script type="application/javascript" src="/assets/coreprotect-tools.js"></script>
             </body>

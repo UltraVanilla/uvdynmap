@@ -45,6 +45,7 @@ router.get("/login/:token", ...auth.login);
 router.post("/login/:token", bodyParser(), ...auth.login);
 router.get("/logout", ...auth.logout);
 router.get("/updateroles/:token", auth.updateRoles);
+router.get("/redisurl", auth.redisUrl);
 
 router.use(
     "/staff",

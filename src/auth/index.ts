@@ -20,7 +20,8 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE2/NW5Jc1zyq+wrLaZ2doJUgS4Utx
 KIuDP7pYrXQ2Wz4cnTqOGsknAEhLkVAS9zT4Cxcn7X9at2155cObymun0w==
 -----END PUBLIC KEY-----
 `;
-if (process.env.VAULTJWT_KEY != null) jwtPublicKey = process.env.VAULTJWT_KEY.split("\\n").join("\n");
+if (process.env.VAULTJWT_KEY != null)
+    process.env.VAULTJWT_KEY = jwtPublicKey = process.env.VAULTJWT_KEY.split("\\n").join("\n");
 
 declare module "koa" {
     interface BaseContext {
@@ -206,6 +207,30 @@ export const logout = [
         ctx.redirect("back", "/");
     },
 ];
+
+// give the current redis key to the server plugin
+export const redisUrl = async (ctx: Koa.Context): Promise<void> => {
+    try {
+        console.log(ctx.headers);
+        console.log(ctx.get("x-uvdynmap-token"));
+        const token: authApi.RedisUrlToken = <authApi.RedisUrlToken>(
+            jwt.verify(ctx.get("x-uvdynmap-token"), jwtPublicKey)
+        );
+        if (!token.getRedisLink) throw jwt.JsonWebTokenError;
+
+        ctx.body = process.env.REDIS_URL || "redis://localhost";
+    } catch (err) {
+        console.log(err);
+        if (err instanceof jwt.JsonWebTokenError) {
+            ctx.throw(403, "JSON web token is invalid");
+        } else if (err instanceof jwt.TokenExpiredError) {
+            ctx.throw(403, "JSON web token has expired, generate a new one");
+        } else if (err instanceof jwt.NotBeforeError) {
+            ctx.throw(403, "JSON web token doesn't exist yet");
+        } else throw err;
+    }
+    const url = process.env.REDIS_URL;
+};
 
 const userCache: LRUCache<string, CoreProtectUser> = new LRUCache({
     max: 500,
