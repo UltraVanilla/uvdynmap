@@ -1,7 +1,7 @@
 import Router from "koa-router";
+import cheerio from "cheerio";
 
 import Action from "./model/Action";
-import cheerio from "cheerio";
 
 const router = new Router();
 
@@ -12,7 +12,6 @@ router.get("/actions", async (ctx) => {
             <head>
                 <meta charset="utf-8"/>
                 <title>Coreprotect log tools</title>
-                <link href="/assets/codemirror.css" rel="stylesheet">
                 <link href="/assets/ultravanilla.css" rel="stylesheet">
             </head>
             <body class="staff-logs">
@@ -37,6 +36,8 @@ router.get("/actions", async (ctx) => {
 
     const actions = await Action.query();
 
+    const tbody = $(".staff-logs-table tbody");
+
     for (const action of actions) {
         const row = $("<tr>");
 
@@ -48,7 +49,7 @@ router.get("/actions", async (ctx) => {
         row.append($("<td>").text(action.sources));
         row.append($("<td>").text(action.targets));
 
-        $(".staff-logs-table tbody").append(row);
+        tbody.append(row);
     }
 
     ctx.body = $.root().html();
