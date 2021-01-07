@@ -211,8 +211,6 @@ export const logout = [
 // give the current redis key to the server plugin
 export const redisUrl = async (ctx: Koa.Context): Promise<void> => {
     try {
-        console.log(ctx.headers);
-        console.log(ctx.get("x-uvdynmap-token"));
         const token: authApi.RedisUrlToken = <authApi.RedisUrlToken>(
             jwt.verify(ctx.get("x-uvdynmap-token"), jwtPublicKey)
         );
@@ -220,7 +218,6 @@ export const redisUrl = async (ctx: Koa.Context): Promise<void> => {
 
         ctx.body = process.env.REDIS_URL || "redis://localhost";
     } catch (err) {
-        console.log(err);
         if (err instanceof jwt.JsonWebTokenError) {
             ctx.throw(403, "JSON web token is invalid");
         } else if (err instanceof jwt.TokenExpiredError) {
@@ -229,7 +226,6 @@ export const redisUrl = async (ctx: Koa.Context): Promise<void> => {
             ctx.throw(403, "JSON web token doesn't exist yet");
         } else throw err;
     }
-    const url = process.env.REDIS_URL;
 };
 
 const userCache: LRUCache<string, CoreProtectUser> = new LRUCache({

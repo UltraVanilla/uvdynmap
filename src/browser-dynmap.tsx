@@ -242,9 +242,16 @@ window.addEventListener("load", function () {
                         contents.append(
                             <>
                                 <h4>Staff tools</h4>
-                                <a className="link" href="/staff/coreprotect-tools" target="blank" rel="noreferrer">
-                                    CoreProtect tools by lordpipe
-                                </a>
+                                <div>
+                                    <a className="link" href="/staff/coreprotect-tools" target="blank" rel="noreferrer">
+                                        CoreProtect tools by lordpipe
+                                    </a>
+                                </div>
+                                <div>
+                                    <a className="link" href="/staff/actions" target="blank" rel="noreferrer">
+                                        Staff actions log
+                                    </a>
+                                </div>
                             </>,
                         );
                     }
@@ -263,7 +270,7 @@ window.addEventListener("load", function () {
                     content: contents[0],
                     headerTitle: "Account",
                     position: "center",
-                    panelSize: "430 350",
+                    panelSize: "430 420",
                     onclosed() {
                         panel = null;
                     },

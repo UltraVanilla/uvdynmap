@@ -1,6 +1,58 @@
 import Router from "koa-router";
 
+import Action from "./model/Action";
+import cheerio from "cheerio";
+
 const router = new Router();
+
+router.get("/actions", async (ctx) => {
+    const $ = cheerio.load(`
+        <!doctype html>
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <title>Coreprotect log tools</title>
+                <link href="/assets/codemirror.css" rel="stylesheet">
+                <link href="/assets/ultravanilla.css" rel="stylesheet">
+            </head>
+            <body class="staff-logs">
+                <table class="staff-logs-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Created</th>
+                            <th>Expires</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Staff</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <!--<script type="application/javascript" src="/assets/staff-logs.js"></script>-->
+            </body>
+        </html>
+    `);
+
+    const actions = await Action.query();
+
+    for (const action of actions) {
+        const row = $("<tr>");
+
+        row.append($("<td>").text(action.id.toString()));
+        row.append($("<td>").text(action.created.toISOString()));
+        row.append($("<td>").text(action.expires == null ? "never" : action.expires.toISOString()));
+        row.append($("<td>").text(action.type));
+        row.append($("<td>").text(action.description));
+        row.append($("<td>").text(action.sources));
+        row.append($("<td>").text(action.targets));
+
+        $(".staff-logs-table tbody").append(row);
+    }
+
+    ctx.body = $.root().html();
+});
 
 router.get("/coreprotect-tools", (ctx) => {
     ctx.body = `
