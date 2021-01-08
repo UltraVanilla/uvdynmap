@@ -132,5 +132,74 @@ export default async (ctx: Koa.BaseContext): Promise<void> => {
 
     $("<link>").attr("href", "assets/fonts.css").attr("rel", "stylesheet").appendTo($("head"));
 
+    ctx.append("Link", "</account-info>; rel=prefetch; as=fetch; crossorigin=anonymous");
+    ctx.append("Link", "</configuration>; rel=prefetch; as=fetch; crossorigin=anonymous");
+    [
+        "/tiles/world/flat/-1956_1949/zzzzz_-62592_62368.png",
+        "/tiles/world/flat/-1956_1950/zzzzz_-62592_62400.png",
+        "/tiles/world/flat/-1957_1949/zzzzz_-62624_62368.png",
+        "/tiles/world/flat/-1955_1949/zzzzz_-62560_62368.png",
+        "/tiles/world/flat/-1956_1948/zzzzz_-62592_62336.png",
+        "/tiles/world/flat/-1957_1950/zzzzz_-62624_62400.png",
+        "/tiles/world/flat/-1955_1950/zzzzz_-62560_62400.png",
+        "/tiles/world/flat/-1957_1948/zzzzz_-62624_62336.png",
+        "/tiles/world/flat/-1955_1948/zzzzz_-62560_62336.png",
+        "/tiles/world/flat/-1956_1951/zzzzz_-62592_62432.png",
+        "/tiles/world/flat/-1958_1949/zzzzz_-62656_62368.png",
+        "/tiles/world/flat/-1954_1949/zzzzz_-62528_62368.png",
+        "/tiles/world/flat/-1956_1947/zzzzz_-62592_62304.png",
+        "/tiles/world/flat/-1957_1951/zzzzz_-62624_62432.png",
+        "/tiles/world/flat/-1955_1951/zzzzz_-62560_62432.png",
+        "/tiles/world/flat/-1958_1950/zzzzz_-62656_62400.png",
+        "/tiles/world/flat/-1954_1950/zzzzz_-62528_62400.png",
+        "/tiles/world/flat/-1958_1948/zzzzz_-62656_62336.png",
+        "/tiles/world/flat/-1954_1948/zzzzz_-62528_62336.png",
+        "/tiles/world/flat/-1957_1947/zzzzz_-62624_62304.png",
+        "/tiles/world/flat/-1955_1947/zzzzz_-62560_62304.png",
+        "/tiles/world/flat/-1958_1951/zzzzz_-62656_62432.png",
+        "/tiles/world/flat/-1954_1951/zzzzz_-62528_62432.png",
+        "/tiles/world/flat/-1958_1947/zzzzz_-62656_62304.png",
+        "/tiles/world/flat/-1954_1947/zzzzz_-62528_62304.png",
+        "/tiles/world/flat/-1956_1952/zzzzz_-62592_62464.png",
+        "/tiles/world/flat/-1959_1949/zzzzz_-62688_62368.png",
+        "/tiles/world/flat/-1953_1949/zzzzz_-62496_62368.png",
+        "/tiles/world/flat/-1956_1946/zzzzz_-62592_62272.png",
+        "/tiles/world/flat/-1957_1952/zzzzz_-62624_62464.png",
+        "/tiles/world/flat/-1955_1952/zzzzz_-62560_62464.png",
+        "/tiles/world/flat/-1959_1950/zzzzz_-62688_62400.png",
+        "/tiles/world/flat/-1953_1950/zzzzz_-62496_62400.png",
+        "/tiles/world/flat/-1959_1948/zzzzz_-62688_62336.png",
+        "/tiles/world/flat/-1953_1948/zzzzz_-62496_62336.png",
+        "/tiles/world/flat/-1957_1946/zzzzz_-62624_62272.png",
+        "/tiles/world/flat/-1955_1946/zzzzz_-62560_62272.png",
+        "/tiles/world/flat/-1958_1952/zzzzz_-62656_62464.png",
+        "/tiles/world/flat/-1954_1952/zzzzz_-62528_62464.png",
+        "/tiles/world/flat/-1959_1951/zzzzz_-62688_62432.png",
+        "/tiles/world/flat/-1953_1951/zzzzz_-62496_62432.png",
+        "/tiles/world/flat/-1959_1947/zzzzz_-62688_62304.png",
+        "/tiles/world/flat/-1953_1947/zzzzz_-62496_62304.png",
+        "/tiles/world/flat/-1958_1946/zzzzz_-62656_62272.png",
+        "/tiles/world/flat/-1954_1946/zzzzz_-62528_62272.png",
+        "/tiles/world/flat/-1959_1952/zzzzz_-62688_62464.png",
+        "/tiles/world/flat/-1953_1952/zzzzz_-62496_62464.png",
+        "/tiles/world/flat/-1959_1946/zzzzz_-62688_62272.png",
+        "/tiles/world/flat/-1953_1946/zzzzz_-62496_62272.png",
+        "/tiles/world/flat/-1958_1949/zzzzz_-62656_62368.png",
+    ].forEach((path) => {
+        ctx.append("Link", `<${path}>; rel=prefetch; as=image`);
+    });
+    [
+        "/js/markers.js",
+        "/js/chat.js",
+        "/js/chatballoon.js",
+        "/js/chatbox.js",
+        "/js/playermarkers.js",
+        "/js/link.js",
+        "/js/timeofdayclock.js",
+        "/js/coord.js",
+    ].forEach((path) => {
+        ctx.append("Link", `<${path}>; rel=prefetch; as=script`);
+    });
+
     ctx.body = $.root().html();
 };
