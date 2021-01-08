@@ -11,7 +11,7 @@ router.get("/actions", async (ctx) => {
         <html>
             <head>
                 <meta charset="utf-8"/>
-                <title>Coreprotect log tools</title>
+                <title>Staff Actions</title>
                 <link href="/assets/ultravanilla.css" rel="stylesheet">
             </head>
             <body class="staff-logs">
