@@ -308,3 +308,50 @@ body {
 .staff-logs-table tr td:last-child {
     border-right: 0;
 }
+
+input[type="range"] {
+    width: 100%;
+    margin: 7.15px 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+}
+input[type="range"]:focus {
+    outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    background: #ffc9e0;
+    border: 0.2px solid #c0c0c0;
+    border-radius: 1.3px;
+    width: 100%;
+    height: 7.7px;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+    margin-top: -7.35px;
+    width: 13px;
+    height: 22px;
+    background: #fffbff;
+    border: 1px solid #d4d8dc;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+    background: #ffe3ef;
+}
+input[type="range"]::-moz-range-track {
+    background: #ffc9e0;
+    border: 0.2px solid #c0c0c0;
+    border-radius: 1.3px;
+    width: 100%;
+    height: 7.7px;
+    cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 13px;
+    height: 22px;
+    background: #fffbff;
+    border: 1px solid #d4d8dc;
+    border-radius: 4px;
+    cursor: pointer;
+}

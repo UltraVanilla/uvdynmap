@@ -292,9 +292,28 @@ window.addEventListener("load", function () {
                 const contents = $(
                     <div>
                         <h3>Configure UI</h3>
+                        <div>
+                            <label htmlFor="settings-brightness">Brightness: </label>
+                            <input id="settings-brightness" type="range" min="50" max="200" value="100" />
+                        </div>
+                        <div>
+                            <label htmlFor="settings-contrast">Contrast: </label>
+                            <input id="settings-contrast" type="range" min="50" max="200" value="100" />
+                        </div>
                         <div className="settings-list-of-elements" />
                     </div>,
                 );
+                const mapTiles = $(".leaflet-map-pane");
+
+                const contrastSlider = contents.find("#settings-contrast");
+                const brightnessSlider = contents.find("#settings-brightness");
+
+                function updateFilters() {
+                    mapTiles.css("filter", `contrast(${contrastSlider.val()}%) brightness(${brightnessSlider.val()}%)`);
+                }
+
+                contents.find("#settings-contrast").on("input change", updateFilters);
+                contents.find("#settings-brightness").on("input change", updateFilters);
 
                 // generate a toggle checkbox for each thing that can be disabled
                 $("[data-toggle]").each((_, elem) => {
