@@ -18,6 +18,12 @@ export interface AccountInfo {
     uuid: string;
 }
 
+export interface CancelCoreprotectCommandResult {
+    commandExists: boolean;
+    command?: string;
+    state?: string;
+}
+
 export const authTokenSchema = {
     $id: "ultravanilla#authToken",
     type: "object",

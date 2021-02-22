@@ -6,6 +6,10 @@ html {
 *:after {
     box-sizing: inherit;
 }
+button {
+    color: inherit;
+    font: inherit;
+}
 
 .box {
     display: flex;
@@ -106,7 +110,12 @@ body {
     display: none;
 }
 
+.link-container {
+    margin: 10px 0px;
+}
+
 .link {
+    cursor: pointer;
     color: #fff;
     border: none;
     display: inline-block;

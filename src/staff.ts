@@ -2,6 +2,9 @@ import Router from "koa-router";
 import cheerio from "cheerio";
 
 import Action from "./model/Action";
+import knex from "./knex";
+
+import * as api from "./auth/auth-api";
 
 const router = new Router();
 
@@ -81,6 +84,27 @@ router.get("/coreprotect-tools", (ctx) => {
             </body>
         </html>
     `;
+});
+
+router.post("/cancel-coreprotect-command", async (ctx) => {
+    const processes = await knex.select("*").from("information_schema.processlist");
+    const offendingProcess = processes.find((row) => {
+        return row.STATE !== "Sleep" && row.INFO?.includes("FROM co_");
+    });
+
+    if (offendingProcess == null) {
+        ctx.body = { commandExists: false };
+        return;
+    }
+
+    await knex.raw("kill ?", offendingProcess.ID);
+
+    const result: api.CancelCoreprotectCommandResult = {
+        commandExists: true,
+        command: offendingProcess.INFO,
+        state: offendingProcess.STATE || "",
+    };
+    ctx.body = result;
 });
 
 export default router;

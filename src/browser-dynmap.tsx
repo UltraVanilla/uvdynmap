@@ -3,7 +3,7 @@ import jQueryType from "jquery";
 import React from "jsx-dom";
 
 import roleColors from "./role-colors";
-import { AccountInfo, isStaff } from "./auth/auth-api";
+import { AccountInfo, CancelCoreprotectCommandResult, isStaff } from "./auth/auth-api";
 
 declare global {
     interface Window {
@@ -164,7 +164,7 @@ window.addEventListener("load", function () {
 
                         <h4>Server Plugins</h4>
 
-                        <p>UltraVanilla plugin by Akoot_</p>
+                        <p>UltraVanilla plugin by lordpipe and Akoot_</p>
                         <a
                             className="link"
                             href="https://github.com/Akoot/UltraVanilla"
@@ -242,18 +242,58 @@ window.addEventListener("load", function () {
                         contents.append(
                             <>
                                 <h4>Staff tools</h4>
-                                <div>
+                                <div className="link-container">
                                     <a className="link" href="/staff/coreprotect-tools" target="blank" rel="noreferrer">
                                         CoreProtect tools by lordpipe
                                     </a>
                                 </div>
-                                <div>
+                                <div className="link-container">
                                     <a className="link" href="/staff/actions" target="blank" rel="noreferrer">
                                         Staff actions log
                                     </a>
                                 </div>
+                                <div className="link-container">
+                                    <button className="link cancel-coreprotect-command">
+                                        Cancel coreprotect command
+                                    </button>
+                                </div>
                             </>,
                         );
+
+                        contents.find(".cancel-coreprotect-command").click(async () => {
+                            const cancelRes = await fetch("/staff/cancel-coreprotect-command", { method: "POST" });
+                            const cancel: CancelCoreprotectCommandResult = await cancelRes.json();
+
+                            const content = (
+                                <>
+                                    <h3>
+                                        {cancel.commandExists
+                                            ? "Successfully stopped command"
+                                            : "There is no command running!"}
+                                    </h3>
+                                </>
+                            );
+
+                            if (cancel.commandExists) {
+                                content.append(
+                                    <>
+                                        <p>
+                                            <strong>State: </strong> <code>{cancel.state}</code>
+                                        </p>
+                                        <p>
+                                            <strong>Command: </strong> <code>{cancel.command}</code>
+                                        </p>
+                                    </>,
+                                );
+                            }
+
+                            jsPanel.create({
+                                content,
+                                headerTitle: "Cancel Coreprotect Command",
+                                position: "left-bottom",
+                                panelSize: "500 350",
+                            });
+                        });
                     }
                 } catch (err) {
                     // fail silently
@@ -270,7 +310,7 @@ window.addEventListener("load", function () {
                     content: contents[0],
                     headerTitle: "Account",
                     position: "center",
-                    panelSize: "430 420",
+                    panelSize: "430 440",
                     onclosed() {
                         panel = null;
                     },
