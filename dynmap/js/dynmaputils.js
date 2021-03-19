@@ -249,7 +249,7 @@ var DynmapTileLayer = L.TileLayer.extend({
 		this._nextLoadTile();
 	},
 	_nextLoadTile: function () {
-		if (this._loadingTiles.length > 4) {
+		if (this._loadingTiles.length > 30) {
 			return;
 		}
 		var next = this._loadQueue.shift();
