@@ -7,3 +7,5 @@ const knex = Knex(knexfile[environment]);
 export const dbReady = knex.migrate.latest();
 
 export default knex;
+
+export const knexDynmap = Knex(knexfile.dynmap);

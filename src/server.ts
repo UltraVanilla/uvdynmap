@@ -9,6 +9,7 @@ import winston from "winston";
 import pkgDir from "pkg-dir";
 
 import { configureSessions } from "./session";
+import { tileServer, worldUpdates } from "./tiles-server";
 
 const pkgPath = pkgDir.sync() || process.cwd();
 
@@ -40,6 +41,8 @@ import staffRouter from "./staff";
 
 router.get("/", pageModifier);
 
+router.get("/tiles/:worldID/:mapID/:region/:coords", tileServer);
+router.get("/up/world/:world/:time", worldUpdates);
 router.get("/account-info", ...auth.accountInfo);
 router.get("/login/:token", ...auth.login);
 router.post("/login/:token", bodyParser(), ...auth.login);

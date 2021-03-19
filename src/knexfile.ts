@@ -26,6 +26,15 @@ const config: { [env: string]: Knex.Config } = {
         },
         migrations,
     },
+
+    dynmap: {
+        client: "mysql",
+        connection: process.env.DYNMAP_MYSQL_URI || "does not exist",
+        pool: {
+            min: 2,
+            max: 10,
+        },
+    },
 };
 
 export default config;

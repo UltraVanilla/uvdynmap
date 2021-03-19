@@ -29,5 +29,6 @@ module.exports = {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-empty-function": "off",
         "no-regex-spaces": "off",
+        "no-constant-condition": "off",
     },
 };

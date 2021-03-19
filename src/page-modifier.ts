@@ -8,7 +8,7 @@ export default async (ctx: Koa.BaseContext): Promise<void> => {
     let loaded = false;
     let error;
     try {
-        const res = await fetch(process.env.DYNMAP_BACKEND || "http://199.127.63.229:8123/", {
+        const res = await fetch(process.env.DYNMAP_BACKEND!, {
             timeout: 7500,
         });
         body = await res.text();
