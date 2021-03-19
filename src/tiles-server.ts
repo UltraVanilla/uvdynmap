@@ -61,7 +61,7 @@ export const tileServer = async (ctx: Koa.Context): Promise<void> => {
     ctx.type = "image/png";
     ctx.lastModified = tile.lastUpdate;
 
-    if (ctx.headers["if-modified-since"] != null && new Date(ctx.headers["if-modified-since"]) < tile.lastUpdate) {
+    if (ctx.headers["if-modified-since"] != null && new Date(ctx.headers["if-modified-since"]) >= tile.lastUpdate) {
         ctx.throw(304);
     } else {
         ctx.body = tile.image;
