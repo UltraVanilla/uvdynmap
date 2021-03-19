@@ -77,6 +77,7 @@ dbReady
         logger.log("warn", "Database does not exist or could not migrate!");
     })
     .then(() => {
-        app.listen(process.env.PORT || 8080);
+        const server = app.listen(process.env.PORT || 8080);
+        server.keepAliveTimeout = 90 * 1000;
         logger.log("info", "App has started");
     });

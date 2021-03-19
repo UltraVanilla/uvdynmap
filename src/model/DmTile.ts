@@ -25,7 +25,7 @@ export default class DmTile extends Model {
     y!: number;
     zoom!: number;
     hashCode!: number;
-    lastUpdate!: number;
+    lastUpdate!: Date;
     format!: number;
     image!: Buffer;
 

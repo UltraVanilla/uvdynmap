@@ -55,12 +55,17 @@ export const tileServer = async (ctx: Koa.Context): Promise<void> => {
 
         if (tile == null) ctx.throw(404);
 
-        ctx.type = "image/png";
-
         tileCache.set(cacheId, tile);
     }
 
-    ctx.body = tile.image;
+    ctx.type = "image/png";
+    ctx.lastModified = tile.lastUpdate;
+
+    if (ctx.headers["if-modified-since"] != null && new Date(ctx.headers["if-modified-since"]) < tile.lastUpdate) {
+        ctx.throw(304);
+    } else {
+        ctx.body = tile.image;
+    }
 };
 
 export const worldUpdates = async (ctx: Koa.Context): Promise<void> => {
