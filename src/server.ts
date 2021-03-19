@@ -1,3 +1,5 @@
+import { format } from "util";
+
 import Koa from "koa";
 import proxy from "koa-proxies";
 import serve from "koa-static";
@@ -22,6 +24,30 @@ const logger = winston.createLogger({
 });
 
 const app = new Koa();
+
+app.use(async (ctx, next) => {
+    try {
+        await next();
+    } finally {
+        const logFormat = '%s - - [%s] "%s %s HTTP" %d %s (%s)\n';
+
+        // eslint-disable-next-line unicorn/explicit-length-check
+        const length = ctx.length ? ctx.length.toString() : "-";
+
+        process.stdout.write(
+            format(
+                logFormat,
+                ctx.ip,
+                new Date().toISOString(),
+                ctx.method,
+                ctx.path,
+                ctx.status,
+                length,
+                ctx.headers["user-agent"],
+            ),
+        );
+    }
+});
 
 const sessionMiddleware = configureSessions(app);
 
