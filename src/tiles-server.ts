@@ -12,12 +12,14 @@ import DmMap from "./model/DmMap";
 import DmTile from "./model/DmTile";
 import * as api from "./auth/auth-api";
 
+import redis from "./redis";
+
 const mapCache: LRUCache<string, DmMap> = new LRUCache({
     maxAge: 1000 * 60 * 60 * 2,
 });
 
 const tileCache: LRUCache<string, DmTile> = new LRUCache({
-    max: 1800,
+    max: 18000,
 });
 
 const worldUpdateCachers = new Map();
@@ -37,7 +39,7 @@ export async function getMap(match: { worldID: string; mapID: string }): Promise
 export const tileServer = async (ctx: Koa.Context): Promise<void> => {
     const { worldID, mapID, coords } = ctx.params;
 
-    const cacheId = ctx.path;
+    const cacheId = `tile:${worldID}:${mapID}:${coords}`;
 
     let tile = tileCache.get(cacheId);
     if (tile == null) {

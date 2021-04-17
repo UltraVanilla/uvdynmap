@@ -249,7 +249,7 @@ var DynmapTileLayer = L.TileLayer.extend({
 		this._nextLoadTile();
 	},
 	_nextLoadTile: function () {
-		if (this._loadingTiles.length > 30) {
+		if (this._loadingTiles.length > 40) {
 			return;
 		}
 		var next = this._loadQueue.shift();
@@ -348,6 +348,22 @@ var DynmapTileLayer = L.TileLayer.extend({
 		var scale = 1 << zoomoutlevel;
 		var x = scale * tilePoint.x;
 		var y = scale * tilePoint.y;
+
+		function hashCode(input) {
+			var hash = 0,
+				i,
+				chr;
+			if (input.length === 0) return hash;
+			for (i = 0; i < input.length; i++) {
+				chr = input.charCodeAt(i);
+				hash = (hash << 5) - hash + chr;
+				hash |= 0;
+			}
+			return hash;
+		}
+
+		var hash = hashCode([x, y, zoom].join(",")) & 0b11;
+
 		return {
 			prefix: this.options.prefix,
 			nightday: this.options.nightandday && this.options.dynmap.serverday ? "_day" : "",
@@ -358,6 +374,7 @@ var DynmapTileLayer = L.TileLayer.extend({
 			x: x,
 			y: y,
 			fmt: this.options["image-format"] || "png",
+			hash: hash,
 		};
 	},
 });
