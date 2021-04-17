@@ -88,5 +88,7 @@ export const bulkAuthTokenSchema = {
 
 export function isStaff({ roles, uuid }: { roles?: string[]; uuid?: string }): boolean {
     if (roles == null || uuid == null) return false;
-    return roles.some((role) => ["intern", "moderator", "admin", "ceo", "dev", "excavator", "cultist"].includes(role));
+    return roles.some((role) =>
+        ["intern", "moderator", "admin", "ceo", "dev", "excavator", "cultist", "devotee"].includes(role),
+    );
 }
