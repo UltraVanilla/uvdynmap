@@ -106,6 +106,7 @@ dbReady
         const instance = parseInt(process.env.NODE_APP_INSTANCE || "0");
         const port = instance + parseInt(process.env.PORT || "8080");
         const server = app.listen(port);
+        app.proxy = true;
         server.keepAliveTimeout = 90 * 1000;
         logger.log("info", `Instance ID: ${instance}`);
         logger.log("info", `App has started on port ${port}`);
