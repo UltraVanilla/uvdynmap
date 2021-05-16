@@ -5,10 +5,6 @@ import { hasDate } from "../util/db";
 import CoreProtectUser from "./CoreProtectUser";
 
 @hasDate("time")
-// @unique({
-//     identifiers: ["id"],
-//     fields: [["uuid", "time"]],
-// })
 export default class CoreProtectUsernameChange extends Model {
     static tableName = "co_username_log";
     static columnNameMappers = snakeCaseMappers();

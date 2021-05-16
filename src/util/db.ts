@@ -25,6 +25,23 @@ export function hasDate(fieldName: string, msMultiplier = 1000) {
     };
 }
 
+export function hasBool(fieldName: string) {
+    return function <M extends Constructor<Model>>(ModelClass: M): M {
+        return class extends ModelClass {
+            $parseDatabaseJson(it: any) {
+                it = super.$parseDatabaseJson(it);
+                if (typeof it[fieldName] === "number") it[fieldName] = it[fieldName] === 1;
+                return it;
+            }
+            $formatDatabaseJson(it: any) {
+                it = super.$formatDatabaseJson(it);
+                if (it[fieldName]) it[fieldName] = it[fieldName] ? 1 : 0;
+                return it;
+            }
+        };
+    };
+}
+
 function keyMapper(mapper: (orig: string) => string) {
     return (obj: Pojo) => {
         if (obj == null || Array.isArray(obj)) {
