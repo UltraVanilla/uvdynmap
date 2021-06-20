@@ -675,7 +675,7 @@ DynMap.prototype = {
                     me.lasttimestamp = update.timestamp;
                 }
                 if (me.options.confighash != update.confighash) {
-                    window.location = me.getLink();
+                    //window.location = me.getLink();
                     return;
                 }
                 me.playerfield.text(
