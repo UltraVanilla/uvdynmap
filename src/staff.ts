@@ -73,7 +73,6 @@ router.get("/survey-responses", async (ctx) => {
                         <tr>
                             <th>ID</th>
                             <th>Created</th>
-                            <th>Username</th>
                             <th>Survey ID</th>
                             <th>Response</th>
                         </tr>
@@ -84,7 +83,7 @@ router.get("/survey-responses", async (ctx) => {
         </html>
     `);
 
-    const submissions = await SurveySubmission.query().withGraphFetched("coreProtectUser");
+    const submissions = await SurveySubmission.query();
 
     const tbody = $(".backend-table tbody");
 
@@ -93,7 +92,6 @@ router.get("/survey-responses", async (ctx) => {
 
         row.append($("<td>").text(submission.id.toString()));
         row.append($("<td>").text(submission.time.toISOString()));
-        row.append($("<td>").text(submission.coreProtectUser.user));
         row.append($("<td>").text(submission.surveyId));
         const pre = $("<pre>").text(JSON.stringify(submission.responses, undefined, "  "));
         row.append($("<td>").append(pre));

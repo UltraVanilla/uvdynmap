@@ -16,6 +16,7 @@ export default async (ctx: Koa.Context): Promise<void> => {
         (await SurveySubmission.query().findOne({ coreprotect_uid: user.rowid, survey_id: surveyId })) ||
         SurveySubmission.fromJson({});
 
+    delete form.username;
     surveySubmission.coreProtectUser = user;
     surveySubmission.surveyId = surveyId;
     surveySubmission.responses = form;
