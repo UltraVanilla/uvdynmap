@@ -5,16 +5,17 @@ import { hasDate, hasEmbeddedJson } from "../util/db";
 import CoreProtectUser from "./CoreProtectUser";
 
 @hasDate("time")
-@hasEmbeddedJson("roles")
-export default class User extends Model {
+@hasEmbeddedJson("responses")
+export default class SurveySubmission extends Model {
     static columnNameMappers = snakeCaseMappers();
-    static tableName = "users";
+    static tableName = "survey_submissions";
     static idColumn = "id";
 
     id!: number;
     time!: Date;
     coreprotectUid!: number;
-    roles!: string[];
+    surveyId!: string;
+    responses!: { [questionId: string]: string };
 
     coreProtectUser!: CoreProtectUser;
 
@@ -24,10 +25,10 @@ export default class User extends Model {
             modelClass: `${__dirname}/CoreProtectUser`,
             join: {
                 from: "co_user.rowid",
-                to: "users.coreprotect_uid",
+                to: "survey_submissions.coreprotect_uid",
             },
         },
     };
 }
 
-User.knex(knex);
+SurveySubmission.knex(knex);

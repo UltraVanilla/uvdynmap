@@ -42,6 +42,23 @@ export function hasBool(fieldName: string) {
     };
 }
 
+export function hasEmbeddedJson(fieldName: string) {
+    return function <M extends Constructor<Model>>(ModelClass: M): M {
+        return class extends ModelClass {
+            $parseDatabaseJson(it: any) {
+                it = super.$parseDatabaseJson(it);
+                if (typeof it[fieldName] === "string") it[fieldName] = JSON.parse(it[fieldName]);
+                return it;
+            }
+            $formatDatabaseJson(it: any) {
+                it = super.$formatDatabaseJson(it);
+                if (it[fieldName]) it[fieldName] = JSON.stringify(it[fieldName]);
+                return it;
+            }
+        };
+    };
+}
+
 function keyMapper(mapper: (orig: string) => string) {
     return (obj: Pojo) => {
         if (obj == null || Array.isArray(obj)) {

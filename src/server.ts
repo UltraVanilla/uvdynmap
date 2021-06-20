@@ -59,11 +59,13 @@ app.use(mount("/assets", serve(pkgPath + "/vendor")));
 
 import * as auth from "./auth/";
 
-const router = new Router();
-
 import pageModifier from "./page-modifier";
 
 import staffRouter from "./staff";
+
+import surveySubmit from "./survey";
+
+const router = new Router();
 
 router.get("/", pageModifier);
 
@@ -75,6 +77,8 @@ router.post("/login/:token", bodyParser(), ...auth.login);
 router.get("/logout", ...auth.logout);
 router.get("/updateroles/:token", auth.updateRoles);
 router.get("/redisurl", auth.redisUrl);
+
+router.post("/survey-submit/:survey", bodyParser(), surveySubmit);
 
 router.use(
     "/staff",
