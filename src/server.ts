@@ -78,7 +78,7 @@ router.get("/logout", ...auth.logout);
 router.get("/updateroles/:token", auth.updateRoles);
 router.get("/redisurl", auth.redisUrl);
 
-router.post("/survey-submit/:survey", bodyParser(), surveySubmit);
+router.post("/survey-submit/:survey", bodyParser(), ...surveySubmit);
 
 router.use(
     "/staff",

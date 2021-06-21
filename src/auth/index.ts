@@ -58,7 +58,6 @@ export function ultravanillaSession(
 }
 
 export const accountInfo = [
-    sessionMiddleware,
     ...ultravanillaSession(() => true),
     async (ctx: Koa.Context, _next: Koa.Next): Promise<void> => {
         if (ctx.coreProtectUser != null && ctx.user != null) {
