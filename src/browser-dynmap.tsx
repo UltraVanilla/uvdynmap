@@ -216,6 +216,26 @@ window.addEventListener("load", function () {
             (async () => {
                 try {
                     const accountInfoRes = await fetch("/account-info");
+                    if (accountInfoRes.status === 451) {
+                        jsPanel.create({
+                            content: (
+                                <>
+                                    <p>
+                                        <strong>
+                                            In order to prevent continued harassment of our members, users who are IP
+                                            banned from the server may not view Dynmap.
+                                        </strong>
+                                    </p>
+                                    <p>Contact Akoot_#4160 to appeal your ban from the server.</p>
+                                    <p>Contact pipe#4348 to remove this dynmap ban if it was a mistake.</p>
+                                </>
+                            ),
+                            headerTitle: "Banned",
+                            position: "center",
+                            panelSize: "560 200",
+                        });
+                        return;
+                    }
                     const accountInfo: AccountInfo = await accountInfoRes.json();
                     contents.find(".account-logged-in-as").text(accountInfo.name);
                     contents.find(".account-logged-in-as-uuid").text(accountInfo.uuid);
